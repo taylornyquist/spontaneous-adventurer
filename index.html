@@ -1,11 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Travel Dashboard</title>
+
+    <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="./assets/css/normalize.css">
+    <link rel="stylesheet" href="./assets/css/skeleton.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+
+
+    <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="./assets/images/nps-favicon.png">
+
 </head>
+
 <body>
-    
+
+    <nav class="navbar">
+        <h1>Travel Dashboard</h1>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="six columns city-search">
+                <h3>City:</h3>
+                <div>
+                    <input type="text" placeholder="Search...">
+                    <div class="">
+                        <button class="btn" id="search-btn" type="submit">
+                            <i class="material-icons">search</i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="six columns date-search">
+                <h3>Dates:</h3>
+                <input id="fromDate" type="text" placeholder="From">
+                <input id="toDate" type="text" placeholder="To">
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="two columns">
+                Two Columns- City Search History
+            </div>
+
+            <div class="ten columns">
+                Ten Columns
+
+                <div class="row">
+                    <div class="six columns">
+                        Six Columns- Events Listed
+                    </div>
+                    <div class="six columns">
+                        Six Columns- Selected Event
+                    </div>
+                </div>
+
+                <div class="row">
+                    National Park Information
+                </div>
+
+
+
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+        <div class="row">
+
+            <div class="two columns">1/6</div>
+            <div class="two columns">2/6</div>
+            <div class="two columns">3/6</div>
+            <div class="two columns">4/6</div>
+            <div class="two columns">5/6</div>
+            <div class="two columns">6/6</div>
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
+
 </html>

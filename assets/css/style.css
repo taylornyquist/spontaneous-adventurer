@@ -1,0 +1,9 @@
+.navbar {
+    background-color:#3952a4;
+    color: white;
+    padding: 10px 0 2px 0;
+}
+
+.navbar h1 {
+    margin-left: 3%;
+}
