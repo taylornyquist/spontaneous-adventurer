@@ -72,8 +72,48 @@ function getWeatherForecast() {
         return weatherResponse.json();
     })
     .then(function(weatherResponse) {
-        console.log(weatherResponse);
-    })
+         //create element to house forecast information
+        //  forecastEl.innerHTML = "<h4 class='mt-3'>5-Day Forecast:</h4>";
+         var forecastRowEl = document.createElement("div");
+         forecastRowEl.className = "row";
+         var divEl = document.createElement("div");
+         divEl.classList.add("card-deck");
+
+
+         for (i = 0; i < response.list.length; i++) {
+             //find instances in the forecast data occurring at 3 p.m. 
+             if (response.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+
+                 //create cards to hold forecast data
+                 var cardEl = document.createElement("div");
+                 cardEl.classList.add("card", "bg-primary", "text-white");
+                 //create element and pull date from each instance
+                 var dateEl = document.createElement("h5");
+                 date = response.list[i].dt_txt;
+                 dateEl.textContent = moment(date).format("MM/DD/YYYY");
+                 //create element and pull icon depicting current weather conditions for each instance
+                 var iconEl = document.createElement("img");
+                 iconEl.src = "http://openweathermap.org/img/wn/" + response.list[i].weather[0].icon + "@2x.png";
+                 iconEl.alt = response.list[i].weather[0].description;
+                 iconEl.setAttribute("class", "icon");
+                 //create element and pull temperature for each instance 
+                 var tempEl = document.createElement("p");
+                 tempEl.innerHTML = "<p>Temp: " + response.list[i].main.temp + "&degF</p>";
+                 //create element and pull humidity level for each instance
+                 var humidityEl = document.createElement("p");
+                 humidityEl.textContent = "Humidity: " + response.list[i].main.humidity + "%";
+
+                 //append all elements to cards
+                 cardEl.appendChild(dateEl);
+                 cardEl.appendChild(iconEl);
+                 cardEl.appendChild(tempEl);
+                 cardEl.appendChild(humidityEl);
+                 divEl.appendChild(cardEl);
+                 forecastEl.append(divEl);
+
+             }
+         }
+     })
 };
 
 
