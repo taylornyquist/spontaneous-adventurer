@@ -1,9 +1,27 @@
 .navbar {
-    background-color:#3952a4;
+    background-color:#32c3f0;
     color: white;
-    padding: 10px 0 2px 0;
+    padding: 10px 0 0 0;
 }
 
 .navbar h1 {
     margin-left: 3%;
+}
+
+.main-container {
+    padding-top: 10px;
+}
+
+.border {
+    border-radius: 4px;
+    border: 1px solid #bbb;
+    padding: 5px;
+}
+
+ul {
+    list-style: none;
+}
+
+.main-section, .weather-forecast {
+    margin: 10px 0;
 }
