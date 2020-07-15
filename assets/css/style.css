@@ -25,3 +25,7 @@ ul {
 .main-section, .weather-forecast {
     margin: 10px 0;
 }
+
+#forecast {
+    display: flex;
+}
