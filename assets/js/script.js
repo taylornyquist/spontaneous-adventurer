@@ -62,9 +62,24 @@ function getCovidData() {
 
 };
 
+var city = "nashville"
+
+function getWeatherForecast() {
+    fetch(
+        "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=23374a7ea0862c1bbdc6d9a18c5c0b7a"
+    )
+    .then(function(weatherResponse) {
+        return weatherResponse.json();
+    })
+    .then(function(weatherResponse) {
+        console.log(weatherResponse);
+    })
+};
+
 
 
 
 getNPSData();
 getTickemaster();
 getCovidData();
+getWeatherForecast();
