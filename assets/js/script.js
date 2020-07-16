@@ -20,11 +20,13 @@ function getNPSData() {
                 var nationalParkName = NPSResponse.data[i].fullName;
                 var nationalParkURL = NPSResponse.data[i].url;
                 var nationalParkItem = document.createElement("li");
+                var nationalParkItemLinked = document.createElement("a")
                 // nationalParkItem.classList.add("");
-                nationalParkItem.textContent = nationalParkName;
-                nationalParkItem.href = nationalParkURL;
+                nationalParkItemLinked.textContent = nationalParkName;
+                nationalParkItemLinked.href = nationalParkURL;
                 console.log(nationalParkItem);
-                nationalParkSlot.appendChild(nationalParkItem)
+                nationalParkItem.append(nationalParkItemLinked);
+                nationalParkSlot.appendChild(nationalParkItem);
                 nationalParksEl.appendChild(nationalParkSlot);
 
                  // var nationalParkAddress = NPSResponse.data[i].addresses;
