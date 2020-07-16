@@ -1,5 +1,4 @@
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
-
 var stateCode = "tn";
 
 function getNPSData() {
@@ -118,14 +117,26 @@ function getWeatherForecast() {
 };
 
 // Local Storage function
-var searchHistory = function () {
-    console.log(searchHistory);
-}
+var saveLocation = function (cityLocation) {
+    // console.log(cityLocation);
+
+    // add location to the saved locations array
+    if (savedLocationsArray === null) {
+        savedLocationsArray = [cityLocation];
+    } else if (savedLocationsArray.indexOf(cityLocation) === -1) {
+        savedLocationsArray.push(cityLocation);
+    }
+
+    // save the new array to localStorage
+    localStorage.setItem("searched-cities", JSON.stringify(savedLocationsArray));
+    // console.log(savedLocationsArray);
+    showPrevious();
+
+};
 
 // on click for search button icon
 $("#search-btn").on("click", getNPSData);
-console.log('test');
-
+console.log("test");
 
 
 getNPSData();
