@@ -2,10 +2,19 @@
     background-color:#32c3f0;
     color: white;
     padding: 10px 0 0 0;
+    display: flex;
+    justify-content: space-between;
 }
 
 .navbar h1 {
     margin-left: 3%;
+    margin-right: 3%;
+}
+
+.site-describe {
+    margin-top: 1%;
+    margin-left: 4%;
+    font-style: italic;
 }
 
 .main-container {
@@ -28,4 +37,15 @@ ul {
 
 #forecast {
     display: flex;
+}
+
+.city-search {
+    display: flex;
+    justify-content: space-around;
+}
+
+#search-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
