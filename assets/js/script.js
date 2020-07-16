@@ -7,14 +7,43 @@ function getNPSData() {
     fetch(
         "https://developer.nps.gov/api/v1/parks?parkCode=&stateCode=" + stateCode + "&api_key=VWQc76Xi1MA1G7mT3R2RbvodV6ongjdqKvID51cV"
     )
-
+    
         .then(function (NPSResponse) {
             return NPSResponse.json();
         })
-        .then(function (NPSResponse) {
+        .then(function (NPSResponse) { 
+            var nationalParksEl = document.getElementById("nationalParks");
+
+            for (i=0; i < 5; i++) {
+                var nationalParkSlot = document.createElement("ul");
+
+                var nationalParkName = NPSResponse.data[i].fullName;
+                var nationalParkURL = NPSResponse.data[i].url;
+                var nationalParkItem = document.createElement("li");
+                // nationalParkItem.classList.add("");
+                nationalParkItem.textContent = nationalParkName;
+                nationalParkItem.href = nationalParkURL;
+                console.log(nationalParkItem);
+                nationalParkSlot.appendChild(nationalParkItem)
+                nationalParksEl.appendChild(nationalParkSlot);
+
+                 // var nationalParkAddress = NPSResponse.data[i].addresses;
+                // for (i = 0; i < nationalParkAddress.length; i++) {
+                //     var nationalParkAddressCity = nationalParkAddress[i].city;
+                // if (nationalParkAddress.type === "Physical") {
+                //     console.log(nationalParkAddressCity);
+                // }
+                // }
+
+            }
+
+            
+                 
             console.log(NPSResponse);
-            console.log(NPSResponse.data[0].fullName);
-            console.log(NPSResponse.data[0].description);
+            // console.log(NPSResponse.data[0].fullName);
+            // console.log(NPSResponse.data[0].description)
+            // console.log(NPSResponse.data[0].latitude);
+            // console.log(NPSResponse.data[0].longitude);
 
         })
 
