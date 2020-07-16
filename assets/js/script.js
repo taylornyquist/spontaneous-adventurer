@@ -124,7 +124,7 @@ var searchHistory = function () {
 
 // on click for search button icon
 $("#search-btn").on("click", getNPSData);
-console.log();
+console.log('test');
 
 
 
