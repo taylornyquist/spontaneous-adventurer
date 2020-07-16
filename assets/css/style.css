@@ -31,12 +31,12 @@ ul {
     list-style: none;
 }
 
-.main-section, .weather-forecast {
+.main-section {
     margin: 10px 0;
 }
 
-#forecast {
-    display: flex;
+.national-parks {
+    margin-top: 10px;
 }
 
 .city-search {
@@ -48,4 +48,17 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.weather-forecast {
+    margin-top: 10px;
+}
+
+.card {
+    margin-top: 10px;
+    text-align: center;   
+}
+
+.icon {
+    object-fit: scale-down;
 }
