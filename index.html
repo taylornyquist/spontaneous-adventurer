@@ -29,26 +29,23 @@
 
     <nav class="navbar">
         <h1>Travel Dashboard</h1>
+        <div id="covid-warning">Current Covid Cases in TN: 68,000</div>
     </nav>
+
+    <h5 class="site-describe">A site for spontaneous travelers to plan their last minute trips!</h5>
 
     <div class="container main-container">
         <div class="row border">
-            <div class="six columns city-search">
-                <h4>City:</h4>
-                <div>
-                    <input type="text" placeholder="Search...">
-                    <div class="">
-                        <button class="btn" id="search-btn" type="submit">
-                            <i class="material-icons">search</i>
-                        </button>
-                    </div>
-                </div>
+            <div class="twelve columns city-search">
+                <h5>Search:</h5>
+                <input type="text" placeholder="City">
+                <input type="text" placeholder="State">
+                <div class="">
+                    <button class="btn" id="search-btn" type="submit">
+                        <i class="material-icons">search</i>
+                    </button>
 
-            </div>
-            <div class="six columns date-search">
-                <h4>Dates:</h4>
-                <input id="fromDate" type="text" placeholder="From">
-                <input id="toDate" type="text" placeholder="To">
+                </div>
 
             </div>
 
@@ -69,7 +66,8 @@
             <div class="nine columns">
 
                 <div class="row">
-                    <div class="six columns border">
+                    <div class="twelve columns border">
+                        <h5>Ticketmaster Events:</h5>
                         <ul>
                             <li>Event 1</li>
                             <li>Event 2</li>
@@ -80,13 +78,7 @@
                         </ul>
                     </div>
 
-                    <div class="six columns border">
-                        <p>Date: 7/15/2020</p>
-                        <p>Location: Nashville, TN</p>
-                        <p>Description: Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nesciunt ab, eaque
-                            fugit odio voluptas sit veritatis rem! Sapiente mollitia, nisi quos earum deleniti nihil
-                            consequuntur soluta beatae iusto? Beatae, ducimus?</p>
-                    </div>
+
                 </div>
 
                 <div class="row border">
@@ -104,9 +96,9 @@
 
         </div>
         <!-- <div class="container"> -->
-            <div class="row weather-forecast" id="forecast">
+        <div class="row weather-forecast" id="forecast">
 
-                <!-- <div class="two columns card border">
+            <!-- <div class="two columns card border">
                 <div class="card-header">
                     Weather 1
                 </div>
