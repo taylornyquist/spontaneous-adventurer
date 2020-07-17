@@ -196,6 +196,14 @@ function getWeatherForecast() {
         })
 };
 
+// Local Storage function
+var searchHistory = function () {
+    console.log(searchHistory);
+}
+
+// on click for search button icon
+$("#search-btn").on("click", getNPSData);
+console.log('test');
 
 
 
