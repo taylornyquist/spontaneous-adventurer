@@ -117,14 +117,41 @@ function getWeatherForecast() {
      })
 };
 
-// Local Storage function
-var searchHistory = function () {
-    console.log(searchHistory);
-}
+// local storage function
+var saveLocation = function (city) {
+    // console.log(cityLocation);
+
+    // add location to the saved locations array
+    if (savedLocationsArray === null) {
+        savedLocationsArray = [city];
+    } else if (savedLocationsArray.indexOf(city) === -1) {
+        savedLocationsArray.push(city);
+    }
+
+    // save the new array to localStorage
+    localStorage.setItem("searched-cities", JSON.stringify(savedLocationsArray));
+    // console.log(savedLocationsArray);
+    showPrevious();
+
+};
 
 // on click for search button icon
-$("#search-btn").on("click", getNPSData);
-console.log('test');
+$("#search-btn").on("click", getNPSData); {
+    console.log(getNPSData);
+}
+
+
+$("#search-input").on("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("search-btn").click();
+    }
+})
+
+// 'Search History' section button functions
+$("#btn").on("click", ); {
+
+}
 
 
 
