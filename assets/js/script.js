@@ -149,53 +149,63 @@ function getWeatherForecast() {
     fetch(
         "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=23374a7ea0862c1bbdc6d9a18c5c0b7a"
     )
-        .then(function (weatherResponse) {
-            return weatherResponse.json();
-        })
-        .then(function (weatherResponse) {
-            //create element to house forecast information
-            var forecastEl = $("#forecast");
-            forecastEl.innerHTML = "<h4>" + city + ":</h4>";
-            // var forecastRowEl = document.createElement("div");
-            // forecastRowEl.className = "row";
-            // var divEl = document.createElement("div");
-            // divEl.classList.add("card-deck");
+    .then(function(weatherResponse) {
+        return weatherResponse.json();
+    })
+    .then(function(weatherResponse) {
+         //create element to house forecast information
+         var forecastEl = $("#forecast");
+         forecastEl.innerHTML = "<h4>" + city + ":</h4>";
+        // var forecastRowEl = document.createElement("div");
+        // forecastRowEl.className = "row";
+        // var divEl = document.createElement("div");
+        // divEl.classList.add("card-deck");
 
 
-            for (i = 0; i < weatherResponse.list.length; i++) {
-                //find instances in the forecast data occurring at 3 p.m. 
-                if (weatherResponse.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+        for (i = 0; i < weatherResponse.list.length; i++) {
+            //find instances in the forecast data occurring at 3 p.m. 
+            if (weatherResponse.list[i].dt_txt.indexOf("15:00:00") !== -1) {
 
-                    //create cards to hold forecast data
-                    var cardEl = document.createElement("div");
-                    cardEl.classList.add("two-columns", "card", "border");
-                    //create element and pull date from each instance
-                    var dateEl = document.createElement("h5");
-                    date = weatherResponse.list[i].dt_txt;
-                    dateEl.textContent = moment(date).format("MM/DD/YYYY");
-                    //create element and pull icon depicting current weather conditions for each instance
-                    var iconEl = document.createElement("img");
-                    iconEl.src = "http://openweathermap.org/img/wn/" + weatherResponse.list[i].weather[0].icon + "@2x.png";
-                    iconEl.alt = weatherResponse.list[i].weather[0].description;
-                    iconEl.setAttribute("class", "icon");
-                    //create element and pull temperature for each instance 
-                    var tempEl = document.createElement("p");
-                    tempEl.innerHTML = "<p>Temp: " + weatherResponse.list[i].main.temp + "&degF</p>";
-                    //create element and pull humidity level for each instance
-                    var humidityEl = document.createElement("p");
-                    humidityEl.textContent = "Humidity: " + weatherResponse.list[i].main.humidity + "%";
+                //create cards to hold forecast data
+                var cardEl = document.createElement("div");
+                cardEl.classList.add("two", "columns", "card", "border");
 
-                    //append all elements to cards
-                    cardEl.appendChild(dateEl);
-                    cardEl.appendChild(iconEl);
-                    cardEl.appendChild(tempEl);
-                    cardEl.appendChild(humidityEl);
-                    // divEl.appendChild(cardEl);
-                    forecastEl.append(cardEl);
+                //create element and pull date from each instance
+                var dateEl = document.createElement("div");
+                date = weatherResponse.list[i].dt_txt;
+                dateEl.textContent = moment(date).format("MM/DD/YY");
 
-                }
-            }
-        })
+                //create element and pull icon depicting current weather conditions for each instance
+                var iconDiv = document.createElement("div");
+                var iconEl = document.createElement("img");
+                iconEl.src = "http://openweathermap.org/img/wn/" + weatherResponse.list[i].weather[0].icon + ".png";
+                iconEl.alt = weatherResponse.list[i].weather[0].description;
+                iconEl.setAttribute("class", "icon");
+
+                //create div element for temp and humidiy <p> tags
+                var cardBody = document.createElement("div");
+                cardBody.setAttribute("class", "card-body");
+                
+                //create element and pull temperature for each instance 
+                var tempEl = document.createElement("p");
+                tempEl.innerHTML = "<p>Temp: " + weatherResponse.list[i].main.temp + "&degF</p>";
+                //create element and pull humidity level for each instance
+                var humidityEl = document.createElement("p");
+                humidityEl.textContent = "Humidity: " + weatherResponse.list[i].main.humidity + "%";
+
+                //append all elements to cards
+                cardEl.appendChild(dateEl);
+                cardEl.appendChild(iconDiv);
+                iconDiv.appendChild(iconEl);
+                cardEl.appendChild(cardBody);
+                cardBody.appendChild(tempEl);
+                cardBody.appendChild(humidityEl);
+                // divEl.appendChild(cardEl);
+                forecastEl.append(cardEl);
+
+             }
+         }
+     })
 };
 
 // local storage function
