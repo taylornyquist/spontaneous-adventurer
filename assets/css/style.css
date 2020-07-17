@@ -49,3 +49,7 @@ ul {
     justify-content: center;
     align-items: center;
 }
+
+.hide {
+    display: none;
+}

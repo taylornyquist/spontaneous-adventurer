@@ -12,13 +12,92 @@ function getNPSData() {
             return NPSResponse.json();
         })
         .then(function (NPSResponse) {
-            console.log(NPSResponse);
-            console.log(NPSResponse.data[0].fullName);
-            console.log(NPSResponse.data[0].description);
+            //attach Javascript to existing element in document
+            var nationalParksEl = document.getElementById("nationalParks");
+            //create ul element to hold list items
+            var nationalParkSlot = document.createElement("ul");
+            nationalParkSlot.setAttribute("id", "npList")
+            var nationalParksListed = NPSResponse.data.length;
 
+            //loop through all park responses
+            for (i = 0; i < NPSResponse.data.length; i++) {
+
+                //for each park listed, pull name and url
+                var nationalParkName = NPSResponse.data[i].fullName;
+                var nationalParkURL = NPSResponse.data[i].url;
+                //for each park listed, create a list item and "a" element
+                var nationalParkItem = document.createElement("li");
+                var nationalParkItemLinked = document.createElement("a")
+                //for each park listed, assign park name and link
+                nationalParkItemLinked.textContent = nationalParkName;
+                nationalParkItemLinked.href = nationalParkURL;
+                console.log(nationalParkItem);
+                //for each park listed, append link and item to ul
+                nationalParkItem.append(nationalParkItemLinked);
+                nationalParkSlot.appendChild(nationalParkItem);
+                nationalParksEl.appendChild(nationalParkSlot);
+
+
+                //limit parks listed to 5
+                if (i >= 5) {
+                    nationalParkItem.classList.add("hide");
+                }
+            }
+            //create button below abbreviated list to show more results
+            if (nationalParksListed >= 5) {
+                var showMoreEl = document.createElement("button");
+                showMoreEl.textContent = "Show More";
+                nationalParksEl.appendChild(showMoreEl);
+                showMoreEl.addEventListener("click", showMore);
+                var showLessEl = document.createElement("button");
+                showLessEl.textContent = "Show Less";
+                showLessEl.setAttribute("class", "hide");
+                nationalParksEl.appendChild(showLessEl);
+                showLessEl.addEventListener("click", showLess);
+                
+            }
         })
+    var showMore = function () {
+        var listItems = $(this).siblings("ul");
+        var showLessBtn = $(this).siblings("button")
+        var listChildren = listItems.children();
+
+        if (listChildren.has("li.hide")) {
+            listChildren.removeClass("hide");
+            $(this).addClass("hide");
+            console.log(listChildren)
+        }
+        if (listChildren.length > 5 && !listChildren.hasClass("hide")) {
+            showLessBtn.removeClass("hide");
+        }
+    }
+
+    var showLess = function () {
+        var listItems = $(this).siblings("ul");
+        var showMoreBtn = $(this).siblings("button")
+        var listChildren = listItems.children();
+
+        if (!listChildren.has("li.hide")) {
+            listChildren.setAttribute("class", "hide");
+            $(this).addClass("hide");
+            console.log(listChildren)
+        }
+        if (listChildren.length >= 5) {
+            for (i = 0; i < listChildren.length; i++) {
+                if (i >= 5) {
+                    listChildren[i].classList.add("hide");
+                }
+        }
+        $(this).addClass("hide");
+        showMoreBtn.removeClass("hide");
+    }
+};
+    
+
 
 };
+
+
 
 
 var cityName = "nashville";
@@ -49,7 +128,7 @@ function getCovidData() {
 
     fetch(
         "https://covidtracking.com/api/v1/states/" + state + "/current.json"
-        )
+    )
 
         .then(function (CovidResponse) {
             return CovidResponse.json();
@@ -57,7 +136,7 @@ function getCovidData() {
         .then(function (CovidResponse) {
             console.log(CovidResponse);
             console.log(CovidResponse.positive);
-        
+
         })
 
 };
@@ -68,53 +147,53 @@ function getWeatherForecast() {
     fetch(
         "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=23374a7ea0862c1bbdc6d9a18c5c0b7a"
     )
-    .then(function(weatherResponse) {
-        return weatherResponse.json();
-    })
-    .then(function(weatherResponse) {
-         //create element to house forecast information
-         var forecastEl = $("#forecast");
-         forecastEl.innerHTML = "<h4>" + city + ":</h4>";
-        // var forecastRowEl = document.createElement("div");
-        // forecastRowEl.className = "row";
-        // var divEl = document.createElement("div");
-        // divEl.classList.add("card-deck");
+        .then(function (weatherResponse) {
+            return weatherResponse.json();
+        })
+        .then(function (weatherResponse) {
+            //create element to house forecast information
+            var forecastEl = $("#forecast");
+            forecastEl.innerHTML = "<h4>" + city + ":</h4>";
+            // var forecastRowEl = document.createElement("div");
+            // forecastRowEl.className = "row";
+            // var divEl = document.createElement("div");
+            // divEl.classList.add("card-deck");
 
 
-        for (i = 0; i < weatherResponse.list.length; i++) {
-            //find instances in the forecast data occurring at 3 p.m. 
-            if (weatherResponse.list[i].dt_txt.indexOf("15:00:00") !== -1) {
+            for (i = 0; i < weatherResponse.list.length; i++) {
+                //find instances in the forecast data occurring at 3 p.m. 
+                if (weatherResponse.list[i].dt_txt.indexOf("15:00:00") !== -1) {
 
-                //create cards to hold forecast data
-                var cardEl = document.createElement("div");
-                cardEl.classList.add("two-columns", "card", "border");
-                //create element and pull date from each instance
-                var dateEl = document.createElement("h5");
-                date = weatherResponse.list[i].dt_txt;
-                dateEl.textContent = moment(date).format("MM/DD/YYYY");
-                //create element and pull icon depicting current weather conditions for each instance
-                var iconEl = document.createElement("img");
-                iconEl.src = "http://openweathermap.org/img/wn/" + weatherResponse.list[i].weather[0].icon + "@2x.png";
-                iconEl.alt = weatherResponse.list[i].weather[0].description;
-                iconEl.setAttribute("class", "icon");
-                //create element and pull temperature for each instance 
-                var tempEl = document.createElement("p");
-                tempEl.innerHTML = "<p>Temp: " + weatherResponse.list[i].main.temp + "&degF</p>";
-                //create element and pull humidity level for each instance
-                var humidityEl = document.createElement("p");
-                humidityEl.textContent = "Humidity: " + weatherResponse.list[i].main.humidity + "%";
+                    //create cards to hold forecast data
+                    var cardEl = document.createElement("div");
+                    cardEl.classList.add("two-columns", "card", "border");
+                    //create element and pull date from each instance
+                    var dateEl = document.createElement("h5");
+                    date = weatherResponse.list[i].dt_txt;
+                    dateEl.textContent = moment(date).format("MM/DD/YYYY");
+                    //create element and pull icon depicting current weather conditions for each instance
+                    var iconEl = document.createElement("img");
+                    iconEl.src = "http://openweathermap.org/img/wn/" + weatherResponse.list[i].weather[0].icon + "@2x.png";
+                    iconEl.alt = weatherResponse.list[i].weather[0].description;
+                    iconEl.setAttribute("class", "icon");
+                    //create element and pull temperature for each instance 
+                    var tempEl = document.createElement("p");
+                    tempEl.innerHTML = "<p>Temp: " + weatherResponse.list[i].main.temp + "&degF</p>";
+                    //create element and pull humidity level for each instance
+                    var humidityEl = document.createElement("p");
+                    humidityEl.textContent = "Humidity: " + weatherResponse.list[i].main.humidity + "%";
 
-                //append all elements to cards
-                cardEl.appendChild(dateEl);
-                cardEl.appendChild(iconEl);
-                cardEl.appendChild(tempEl);
-                cardEl.appendChild(humidityEl);
-                // divEl.appendChild(cardEl);
-                forecastEl.append(cardEl);
+                    //append all elements to cards
+                    cardEl.appendChild(dateEl);
+                    cardEl.appendChild(iconEl);
+                    cardEl.appendChild(tempEl);
+                    cardEl.appendChild(humidityEl);
+                    // divEl.appendChild(cardEl);
+                    forecastEl.append(cardEl);
 
-             }
-         }
-     })
+                }
+            }
+        })
 };
 
 // Local Storage function
