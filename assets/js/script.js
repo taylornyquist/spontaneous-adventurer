@@ -1,3 +1,6 @@
+// add saved locations array (not sure if we need this?)
+var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
+
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
 var stateCode = "tn";
 
@@ -116,15 +119,15 @@ function getWeatherForecast() {
      })
 };
 
-// Local Storage function
-var saveLocation = function (cityLocation) {
+// local storage function
+var saveLocation = function (city) {
     // console.log(cityLocation);
 
     // add location to the saved locations array
     if (savedLocationsArray === null) {
-        savedLocationsArray = [cityLocation];
-    } else if (savedLocationsArray.indexOf(cityLocation) === -1) {
-        savedLocationsArray.push(cityLocation);
+        savedLocationsArray = [city];
+    } else if (savedLocationsArray.indexOf(city) === -1) {
+        savedLocationsArray.push(city);
     }
 
     // save the new array to localStorage
@@ -135,8 +138,22 @@ var saveLocation = function (cityLocation) {
 };
 
 // on click for search button icon
-$("#search-btn").on("click", getNPSData);
-console.log("test");
+$("#search-btn").on("click", getNPSData); {
+    console.log(getNPSData);
+}
+
+
+$("#search-input").on("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("search-btn").click();
+    }
+})
+
+// 'Search History' section button functions
+$("#btn").on("click", ); {
+
+}
 
 
 getNPSData();
