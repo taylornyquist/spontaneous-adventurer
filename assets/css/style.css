@@ -1,15 +1,20 @@
 .navbar {
     background-color:#32c3f0;
     color: white;
-    padding: 10px 0 0 0;
-    display: flex;
-    justify-content: space-between;
+    padding: 10px;
 }
 
 .navbar h1 {
-    margin-left: 3%;
-    margin-right: 3%;
+    /* margin-left: 3%;
+    margin-right: 3%; */
+    display: inline-flex;
 }
+
+#covid-warning {
+    float: right;
+    display: inline-flex;
+    color: black;
+} 
 
 .site-describe {
     margin-top: 1%;
@@ -31,12 +36,12 @@ ul {
     list-style: none;
 }
 
-.main-section, .weather-forecast {
+.main-section {
     margin: 10px 0;
 }
 
-#forecast {
-    display: flex;
+.national-parks {
+    margin-top: 10px;
 }
 
 .city-search {
@@ -48,6 +53,19 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.weather-forecast {
+    margin-top: 10px;
+}
+
+.card {
+    margin-top: 10px;
+    text-align: center;   
+}
+
+.icon {
+    object-fit: scale-down;
 }
 
 .hide {
