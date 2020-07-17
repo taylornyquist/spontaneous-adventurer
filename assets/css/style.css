@@ -1,15 +1,20 @@
 .navbar {
     background-color:#32c3f0;
     color: white;
-    padding: 10px 0 0 0;
-    display: flex;
-    justify-content: space-between;
+    padding: 10px;
 }
 
 .navbar h1 {
-    margin-left: 3%;
-    margin-right: 3%;
+    /* margin-left: 3%;
+    margin-right: 3%; */
+    display: inline-flex;
 }
+
+#covid-warning {
+    float: right;
+    display: inline-flex;
+    color: black;
+} 
 
 .site-describe {
     margin-top: 1%;
