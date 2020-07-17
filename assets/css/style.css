@@ -67,3 +67,7 @@ ul {
 .icon {
     object-fit: scale-down;
 }
+
+.hide {
+    display: none;
+}
