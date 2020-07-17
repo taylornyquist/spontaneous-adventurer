@@ -17,7 +17,8 @@ function getNPSData() {
             //create ul element to hold list items
             var nationalParkSlot = document.createElement("ul");
             nationalParkSlot.setAttribute("id", "npList")
-            var nationalParksListed = NPSResponse.data.length;
+            var nationalParksListed = NPSResponse.data;
+            console.log(NPSResponse);
 
             //loop through all park responses
             for (i = 0; i < NPSResponse.data.length; i++) {
@@ -25,17 +26,63 @@ function getNPSData() {
                 //for each park listed, pull name and url
                 var nationalParkName = NPSResponse.data[i].fullName;
                 var nationalParkURL = NPSResponse.data[i].url;
+                var nationalParkImage = NPSResponse.data[i].images;
+
+                // debugger;
+                if (nationalParkImage[0]){
+                    var nationalParkImageUrl = nationalParkImage[0].url;
+                    var nationalParkImageAlt = nationalParkImage[0].altText;
+
+                   
+
+                    //add function to show image upon hover
+                    $(nationalParkItem).hover(showImage, removeImage); 
+                        
+                        var showImage = function() {
+                        var parkImage = $(this).children("img");
+                        parkImage.removeClass("hide");
+                        };
+
+                        var removeImage = function() {
+                            var parkImage = $(this).children("img");
+                            parkImage.addClass("hide");
+                        }
+//     var selectedPark = $(this)
+//     var parkImages = $(this).images;
+//     console.log(selectedPark);
+//     var parkImageURL = NPSResponse.data[i].images[0].url;
+//    var parkImageEl = document.createElement("img");
+
+//    parkImageEl.src = parkImageURL;
+//    console.log(parkImage);
+
+// })
+                    console.log(nationalParkImageUrl);
+                } else {
+                    console.log("No images available")
+                    
+                }
                 //for each park listed, create a list item and "a" element
                 var nationalParkItem = document.createElement("li");
                 var nationalParkItemLinked = document.createElement("a")
                 //for each park listed, assign park name and link
                 nationalParkItemLinked.textContent = nationalParkName;
                 nationalParkItemLinked.href = nationalParkURL;
-                console.log(nationalParkItem);
+                //add image to each element
+                var nationalParkImageEl = document.createElement("img")
+                nationalParkImageEl.src = nationalParkImageUrl;
+                nationalParkImageEl.height ="150";
+                nationalParkImageEl.style.cssFloat = "right";
+                nationalParkImageEl.alt = nationalParkImageAlt;
+                nationalParkImageEl.setAttribute("class", "hide");
                 //for each park listed, append link and item to ul
+                nationalParkItem.append(nationalParkImageEl);
                 nationalParkItem.append(nationalParkItemLinked);
                 nationalParkSlot.appendChild(nationalParkItem);
                 nationalParksEl.appendChild(nationalParkSlot);
+
+                //display image of park on hover
+
 
 
                 //limit parks listed to 5
@@ -44,7 +91,7 @@ function getNPSData() {
                 }
             }
             //create button below abbreviated list to show more results
-            if (nationalParksListed >= 5) {
+            if (nationalParksListed.length >= 5) {
                 var showMoreEl = document.createElement("button");
                 showMoreEl.textContent = "Show More";
                 nationalParksEl.appendChild(showMoreEl);
@@ -56,6 +103,10 @@ function getNPSData() {
                 showLessEl.addEventListener("click", showLess);
                 
             }
+
+
+
+
         })
     var showMore = function () {
         var listItems = $(this).siblings("ul");
@@ -65,7 +116,6 @@ function getNPSData() {
         if (listChildren.has("li.hide")) {
             listChildren.removeClass("hide");
             $(this).addClass("hide");
-            console.log(listChildren)
         }
         if (listChildren.length > 5 && !listChildren.hasClass("hide")) {
             showLessBtn.removeClass("hide");
@@ -80,7 +130,6 @@ function getNPSData() {
         if (!listChildren.has("li.hide")) {
             listChildren.setAttribute("class", "hide");
             $(this).addClass("hide");
-            console.log(listChildren)
         }
         if (listChildren.length >= 5) {
             for (i = 0; i < listChildren.length; i++) {
