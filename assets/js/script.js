@@ -97,15 +97,19 @@ function getNPSData() {
 
 };
 
-
-
-
 var cityName = "nashville";
 
 function getTickemaster() {
+    var searchInput = document.querySelector(".search-city").value;
+    //Event 1 DOM elements
+    var eventNameEl1 = document.querySelector(".event-name-1");
+    var eventDateEl1 = document.querySelector(".event-date-1");
+    var eventTimeEl1 = document.querySelector(".event-time-1");
+    var eventVenueEl1 = document.querySelector(".event-venue-1");
+    var eventUrlEl1  = document.querySelector(".event-url-1");
 
     fetch(
-        "https://app.ticketmaster.com/discovery/v2/events.json?&city=" + cityName + "&apikey=tjyAA0gwpffEVvhQI0s0EEVJT3wznjso"
+        "https://app.ticketmaster.com/discovery/v2/events.json?&city=" + searchInput + "&apikey=tjyAA0gwpffEVvhQI0s0EEVJT3wznjso"
     )
         .then(function (ticketmasterResponse) {
             return ticketmasterResponse.json();
@@ -114,9 +118,19 @@ function getTickemaster() {
             console.log(ticketmasterResponse);
             console.log(ticketmasterResponse._embedded.events[0].name);
             console.log(ticketmasterResponse._embedded.events[0].url);
-
+            //Get data for Event 1
+            var eventName1 = ticketmasterResponse._embedded.events[0].name;
+            var eventDate1 = ticketmasterResponse._embedded.events[0].dates.start.localDate;
+            var eventTime1 = ticketmasterResponse._embedded.events[0].dates.start.localTime;
+            var eventVenue1 = ticketmasterResponse._embedded.events[0]._embedded.venues[0].name;
+            var eventUrl1 = ticketmasterResponse._embedded.events[0].url;
+            //Add value to event 1 elements
+            eventNameEl1.innerHTML = eventName1;
+            eventDateEl1.innerHTML = eventDate1;
+            eventTimeEl1.innerHTML = eventTime1;
+            eventVenueEl1.innerHTML = eventVenue1;
+            eventUrlEl1.href = eventUrl1;
         })
-
 };
 
 // state must be lowercase and two letter abbreviation, we'll use toLowerCase() method
@@ -203,6 +217,7 @@ var searchHistory = function () {
 
 // on click for search button icon
 $("#search-btn").on("click", getNPSData);
+$("#search-btn").on("click", getTickemaster);
 console.log('test');
 
 

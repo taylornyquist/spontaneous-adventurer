@@ -31,6 +31,11 @@ ul {
     list-style: none;
 }
 
+.event-span {
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
 .main-section, .weather-forecast {
     margin: 10px 0;
 }
