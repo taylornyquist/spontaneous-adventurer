@@ -186,6 +186,12 @@ function getCovidData() {
             console.log(CovidResponse);
             console.log(CovidResponse.positive);
 
+            var covidPositive = (CovidResponse.positive).toLocaleString();
+            $("#covid-data").text(covidPositive);
+
+            var covidState = state.toUpperCase();
+            $("#covid-state").text(covidState);
+
         })
 
 };
