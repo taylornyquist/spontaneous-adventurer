@@ -1,5 +1,7 @@
-// seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
+// add saved locations array (not sure if we need this?)
+var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
 
+// seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
 var stateCode = "tn";
 
 function getNPSData() {
@@ -261,18 +263,42 @@ function getWeatherForecast() {
      })
 };
 
-// Local Storage function
-var searchHistory = function () {
-    console.log(searchHistory);
+// local storage function
+var saveLocation = function (city) {
+    // console.log(cityLocation);
+
+    // add location to the saved locations array
+    if (savedLocationsArray === null) {
+        savedLocationsArray = [city];
+    } else if (savedLocationsArray.indexOf(city) === -1) {
+        savedLocationsArray.push(city);
+    }
+
+    // save the new array to localStorage
+    localStorage.setItem("searched-cities", JSON.stringify(savedLocationsArray));
+    // console.log(savedLocationsArray);
+    showPrevious();
+
+};
+
+var click = function() {
+    console.log("test");
+    getNPSData();
+    getTickemaster();
+    getCovidData();
+    getWeatherForecast();
 }
 
 // on click for search button icon
-$("#search-btn").on("click", getNPSData);
-console.log('test');
+$("#search-btn").on("click", click);
+
+
+// $("#search-input").on("keyup", function (event) {
+//     if (event.keyCode === 13) {
+//         event.preventDefault();
+//         document.getElementById("search-btn").click();
+//     }
+// })
 
 
 
-getNPSData();
-getTickemaster();
-getCovidData();
-getWeatherForecast();
