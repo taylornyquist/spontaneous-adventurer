@@ -1,7 +1,7 @@
 .navbar {
     background-color:#32c3f0;
     color: white;
-    padding: 10px;
+    padding: 10px 10px 1px 20px;
 }
 
 .navbar h1 {
@@ -13,7 +13,11 @@
 .covid-warning {
     background-color:#919eab;
     color: white;
-    padding: 10px;
+    padding: 10px 10px 10px 20px;
+}
+
+#covid-data {
+    text-decoration-line: underline;
 }
 
 .site-describe {
@@ -46,6 +50,7 @@ ul {
 
 .city-search {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
 }
 
