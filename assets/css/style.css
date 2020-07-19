@@ -7,6 +7,7 @@
 .navbar h1 {
     /* margin-left: 3%;
     margin-right: 3%; */
+    margin-bottom: .5rem;
     display: inline-flex;
 }
 
@@ -14,10 +15,18 @@
     background-color:#919eab;
     color: white;
     padding: 10px 10px 10px 20px;
+    display: none;
+}
+
+.show {
+    display: block;
 }
 
 #covid-data {
-    text-decoration-line: underline;
+    /* text-decoration-line: underline; */
+    background-color: #B70000;
+    padding: 5px 10px;
+    border-radius: 15px;
 }
 
 .site-describe {
@@ -60,6 +69,10 @@ ul {
     align-items: center;
 }
 
+.search-history {
+    text-align: center;
+}
+
 .weather-forecast {
     margin-top: 10px;
 }
@@ -75,4 +88,17 @@ ul {
 
 .hide {
     display: none;
+}
+
+/* Media Query */
+@media screen and (max-width: 768px) {
+    .city-search input {
+        width: 100%;
+    }
+
+    .button-primary {
+        width: 80%;
+        padding: 0 5px;
+    } 
+
 }
