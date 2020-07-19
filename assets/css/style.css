@@ -63,6 +63,10 @@ ul {
     justify-content: space-around;
 }
 
+.city-search h5, .city-search input, .city-search button {
+    margin: 5px;
+}
+
 #search-btn {
     display: flex;
     justify-content: center;
