@@ -54,7 +54,7 @@ function getNPSData() {
                 showLessEl.setAttribute("class", "hide");
                 nationalParksEl.appendChild(showLessEl);
                 showLessEl.addEventListener("click", showLess);
-                
+
             }
         })
     var showMore = function () {
@@ -87,12 +87,12 @@ function getNPSData() {
                 if (i >= 5) {
                     listChildren[i].classList.add("hide");
                 }
+            }
+            $(this).addClass("hide");
+            showMoreBtn.removeClass("hide");
         }
-        $(this).addClass("hide");
-        showMoreBtn.removeClass("hide");
-    }
-};
-    
+    };
+
 
 
 };
@@ -100,13 +100,8 @@ function getNPSData() {
 var cityName = "nashville";
 
 function getTickemaster() {
+    //Get DOM element for search value to place in API call
     var searchInput = document.querySelector(".search-city").value;
-    //Event 1 DOM elements
-    var eventNameEl1 = document.querySelector(".event-name-1");
-    var eventDateEl1 = document.querySelector(".event-date-1");
-    var eventTimeEl1 = document.querySelector(".event-time-1");
-    var eventVenueEl1 = document.querySelector(".event-venue-1");
-    var eventUrlEl1  = document.querySelector(".event-url-1");
 
     fetch(
         "https://app.ticketmaster.com/discovery/v2/events.json?&city=" + searchInput + "&apikey=tjyAA0gwpffEVvhQI0s0EEVJT3wznjso"
@@ -115,21 +110,48 @@ function getTickemaster() {
             return ticketmasterResponse.json();
         })
         .then(function (ticketmasterResponse) {
-            console.log(ticketmasterResponse);
-            console.log(ticketmasterResponse._embedded.events[0].name);
-            console.log(ticketmasterResponse._embedded.events[0].url);
-            //Get data for Event 1
-            var eventName1 = ticketmasterResponse._embedded.events[0].name;
-            var eventDate1 = ticketmasterResponse._embedded.events[0].dates.start.localDate;
-            var eventTime1 = ticketmasterResponse._embedded.events[0].dates.start.localTime;
-            var eventVenue1 = ticketmasterResponse._embedded.events[0]._embedded.venues[0].name;
-            var eventUrl1 = ticketmasterResponse._embedded.events[0].url;
-            //Add value to event 1 elements
-            eventNameEl1.innerHTML = eventName1;
-            eventDateEl1.innerHTML = eventDate1;
-            eventTimeEl1.innerHTML = eventTime1;
-            eventVenueEl1.innerHTML = eventVenue1;
-            eventUrlEl1.href = eventUrl1;
+            //Get DOM element for ticketmaster div
+            var ticketmasterEl = document.getElementById("ticketmaster");
+            ticketmasterEl.innerHTML = "<h5>Ticketmaster Events:</h5>";
+
+            //For loop to get data from ticketmaster API
+            for (i = 0; i < 5; i++) {
+                //Get API data for events
+                var eventName = ticketmasterResponse._embedded.events[i].name;
+                var eventDate = ticketmasterResponse._embedded.events[i].dates.start.localDate;
+                var eventTime = ticketmasterResponse._embedded.events[i].dates.start.localTime;
+                var eventVenue = ticketmasterResponse._embedded.events[i]._embedded.venues[0].name;
+                var eventUrl = ticketmasterResponse._embedded.events[i].url;
+
+                //Create DOM element to hold event information
+                var eventList = document.createElement("div")
+
+                //Create DOM element for event name and append to event div
+                var eventNameEl = document.createElement("a");
+                eventNameEl.innerHTML = "What: " + eventName;
+                eventNameEl.href = eventUrl;
+                eventNameEl.target = "_blank";
+                eventList.appendChild(eventNameEl);
+
+                //Create DOM element for event date and append to event div
+                var eventDateEl = document.createElement("span");
+                eventDate = moment(eventDate).format("MM/DD/YYYY");
+                eventTime = moment(eventTime, "HH:mm:ss").format("LT");
+                eventDateEl.innerHTML = "When: " + eventDate + " at " + eventTime;
+                eventList.appendChild(eventDateEl);
+
+                //Create DOM element for event venue and append to event div
+                var eventVenueEl = document.createElement("span");
+                eventVenueEl.innerHTML = "Where: " + eventVenue;
+                eventList.appendChild(eventVenueEl);
+
+                eventList.classList.add("border", "event-div");
+
+                //Append eventList to ticketmaster div
+                ticketmasterEl.append(eventList);
+            }
+            
+            
         })
 };
 

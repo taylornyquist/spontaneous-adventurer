@@ -31,9 +31,9 @@ ul {
     list-style: none;
 }
 
-.event-span {
-    padding-left: 5px;
-    padding-right: 10px;
+.event-div {
+    display: flex;
+    flex-direction: column;
 }
 
 .main-section, .weather-forecast {
