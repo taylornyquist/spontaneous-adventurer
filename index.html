@@ -29,17 +29,19 @@
 
     <nav class="navbar">
         <h1>Travel Dashboard</h1>
-        <div id="covid-warning">Current Covid Cases in TN: 68,000</div>
+        <h5 class="site-describe">A site for spontaneous travelers to plan their last minute trips!</h5>
     </nav>
 
-    <h5 class="site-describe">A site for spontaneous travelers to plan their last minute trips!</h5>
+    <h5 class="covid-warning">Coronavirus Disease 2019 (COVID-19) Warning: <span id="covid-data"></span> Confirmed Cases in <span id="covid-state"></span></h5>
 
     <div class="container main-container">
         <div class="row border">
-            <div class="twelve columns city-search">
+            <div class="city-search">
                 <h5>Search:</h5>
-                <input type="text" placeholder="City" class="search-city">
-                <input type="text" placeholder="State">
+
+                <input id="city-input" type="text" placeholder="City" class="search-city">
+                <input id="state-input" type="text" placeholder="State">
+
                 <div class="">
                     <button class="btn" id="search-btn" type="submit">
                         <i class="material-icons">search</i>
@@ -53,7 +55,7 @@
 
         <div class="row main-section">
 
-            <div class="three columns border">
+            <div class="three columns border search-history">
                 <h5>Search History:</h5>
                 <button class="button-primary" type="button" class="btn">Search 1</button>
                 <button class="button-primary" type="button" class="btn">Search 2</button>
@@ -68,6 +70,7 @@
                 <div class="row">
                     <div class="twelve columns border" id="ticketmaster">
                         <!-- <h5>Ticketmaster Events:</h5>
+
                         <ul>
                             <li>
                                 <span>What:</span><span class="event-name event-span"></span>
@@ -95,7 +98,7 @@
             </div>
 
         </div>
-        <!-- <div class="container"> -->
+
         <div class="row weather-forecast" id="forecast">
 
             <!-- <div class="two columns card border">
@@ -187,11 +190,9 @@
                     <p class="card-text">Humidity: 65%</p>
                 </div>
             </div> -->
-            <!-- </div> -->
+
         </div>
-
     </div>
-
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

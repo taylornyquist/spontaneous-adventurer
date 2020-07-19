@@ -1,5 +1,7 @@
-// seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
+// add saved locations array (not sure if we need this?)
+var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
 
+// seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
 var stateCode = "tn";
 
 function getNPSData() {
@@ -17,7 +19,8 @@ function getNPSData() {
             //create ul element to hold list items
             var nationalParkSlot = document.createElement("ul");
             nationalParkSlot.setAttribute("id", "npList")
-            var nationalParksListed = NPSResponse.data.length;
+            var nationalParksListed = NPSResponse.data;
+            console.log(NPSResponse);
 
             //loop through all park responses
             for (i = 0; i < NPSResponse.data.length; i++) {
@@ -25,17 +28,63 @@ function getNPSData() {
                 //for each park listed, pull name and url
                 var nationalParkName = NPSResponse.data[i].fullName;
                 var nationalParkURL = NPSResponse.data[i].url;
+                var nationalParkImage = NPSResponse.data[i].images;
+
+                // debugger;
+                if (nationalParkImage[0]) {
+                    var nationalParkImageUrl = nationalParkImage[0].url;
+                    var nationalParkImageAlt = nationalParkImage[0].altText;
+
+
+
+                    //add function to show image upon hover
+                    $(nationalParkItem).hover(showImage, removeImage);
+
+                    var showImage = function () {
+                        var parkImage = $(this).children("img");
+                        parkImage.removeClass("hide");
+                    };
+
+                    var removeImage = function () {
+                        var parkImage = $(this).children("img");
+                        parkImage.addClass("hide");
+                    }
+                    //     var selectedPark = $(this)
+                    //     var parkImages = $(this).images;
+                    //     console.log(selectedPark);
+                    //     var parkImageURL = NPSResponse.data[i].images[0].url;
+                    //    var parkImageEl = document.createElement("img");
+
+                    //    parkImageEl.src = parkImageURL;
+                    //    console.log(parkImage);
+
+                    // })
+                    console.log(nationalParkImageUrl);
+                } else {
+                    console.log("No images available")
+
+                }
                 //for each park listed, create a list item and "a" element
                 var nationalParkItem = document.createElement("li");
                 var nationalParkItemLinked = document.createElement("a")
                 //for each park listed, assign park name and link
                 nationalParkItemLinked.textContent = nationalParkName;
                 nationalParkItemLinked.href = nationalParkURL;
-                console.log(nationalParkItem);
+                //add image to each element
+                var nationalParkImageEl = document.createElement("img")
+                nationalParkImageEl.src = nationalParkImageUrl;
+                nationalParkImageEl.height = "150";
+                nationalParkImageEl.style.cssFloat = "right";
+                nationalParkImageEl.alt = nationalParkImageAlt;
+                nationalParkImageEl.setAttribute("class", "hide");
                 //for each park listed, append link and item to ul
+                nationalParkItem.append(nationalParkImageEl);
                 nationalParkItem.append(nationalParkItemLinked);
                 nationalParkSlot.appendChild(nationalParkItem);
                 nationalParksEl.appendChild(nationalParkSlot);
+
+                //display image of park on hover
+
 
 
                 //limit parks listed to 5
@@ -44,7 +93,7 @@ function getNPSData() {
                 }
             }
             //create button below abbreviated list to show more results
-            if (nationalParksListed >= 5) {
+            if (nationalParksListed.length >= 5) {
                 var showMoreEl = document.createElement("button");
                 showMoreEl.textContent = "Show More";
                 nationalParksEl.appendChild(showMoreEl);
@@ -56,6 +105,10 @@ function getNPSData() {
                 showLessEl.addEventListener("click", showLess);
 
             }
+
+
+
+
         })
     var showMore = function () {
         var listItems = $(this).siblings("ul");
@@ -65,7 +118,6 @@ function getNPSData() {
         if (listChildren.has("li.hide")) {
             listChildren.removeClass("hide");
             $(this).addClass("hide");
-            console.log(listChildren)
         }
         if (listChildren.length > 5 && !listChildren.hasClass("hide")) {
             showLessBtn.removeClass("hide");
@@ -80,7 +132,6 @@ function getNPSData() {
         if (!listChildren.has("li.hide")) {
             listChildren.setAttribute("class", "hide");
             $(this).addClass("hide");
-            console.log(listChildren)
         }
         if (listChildren.length >= 5) {
             for (i = 0; i < listChildren.length; i++) {
@@ -92,9 +143,6 @@ function getNPSData() {
             showMoreBtn.removeClass("hide");
         }
     };
-
-
-
 };
 
 var cityName = "nashville";
@@ -158,9 +206,9 @@ function getTickemaster() {
 // state must be lowercase and two letter abbreviation, we'll use toLowerCase() method
 // user will need to input both a city and a state for these api's to work
 
-var state = "tn";
-
 function getCovidData() {
+    // var state = "tn";
+    var state = $("#state-input").val().trim();
 
     fetch(
         "https://covidtracking.com/api/v1/states/" + state + "/current.json"
@@ -172,6 +220,14 @@ function getCovidData() {
         .then(function (CovidResponse) {
             console.log(CovidResponse);
             console.log(CovidResponse.positive);
+
+            var covidPositive = (CovidResponse.positive).toLocaleString();
+            $("#covid-data").text(covidPositive);
+
+            var covidState = state.toUpperCase();
+            $("#covid-state").text(covidState);
+
+            $(".covid-warning").addClass("show");
 
         })
 
@@ -202,16 +258,24 @@ function getWeatherForecast() {
 
                     //create cards to hold forecast data
                     var cardEl = document.createElement("div");
-                    cardEl.classList.add("two-columns", "card", "border");
+                    cardEl.classList.add("two", "columns", "card", "border");
+
                     //create element and pull date from each instance
-                    var dateEl = document.createElement("h5");
+                    var dateEl = document.createElement("div");
                     date = weatherResponse.list[i].dt_txt;
-                    dateEl.textContent = moment(date).format("MM/DD/YYYY");
+                    dateEl.textContent = moment(date).format("MM/DD/YY");
+
                     //create element and pull icon depicting current weather conditions for each instance
+                    var iconDiv = document.createElement("div");
                     var iconEl = document.createElement("img");
-                    iconEl.src = "http://openweathermap.org/img/wn/" + weatherResponse.list[i].weather[0].icon + "@2x.png";
+                    iconEl.src = "http://openweathermap.org/img/wn/" + weatherResponse.list[i].weather[0].icon + ".png";
                     iconEl.alt = weatherResponse.list[i].weather[0].description;
                     iconEl.setAttribute("class", "icon");
+
+                    //create div element for temp and humidiy <p> tags
+                    var cardBody = document.createElement("div");
+                    cardBody.setAttribute("class", "card-body");
+
                     //create element and pull temperature for each instance 
                     var tempEl = document.createElement("p");
                     tempEl.innerHTML = "<p>Temp: " + weatherResponse.list[i].main.temp + "&degF</p>";
@@ -221,9 +285,11 @@ function getWeatherForecast() {
 
                     //append all elements to cards
                     cardEl.appendChild(dateEl);
-                    cardEl.appendChild(iconEl);
-                    cardEl.appendChild(tempEl);
-                    cardEl.appendChild(humidityEl);
+                    cardEl.appendChild(iconDiv);
+                    iconDiv.appendChild(iconEl);
+                    cardEl.appendChild(cardBody);
+                    cardBody.appendChild(tempEl);
+                    cardBody.appendChild(humidityEl);
                     // divEl.appendChild(cardEl);
                     forecastEl.append(cardEl);
 
@@ -232,19 +298,50 @@ function getWeatherForecast() {
         })
 };
 
-// Local Storage function
-var searchHistory = function () {
-    console.log(searchHistory);
+// local storage function
+var saveLocation = function (city) {
+    // console.log(cityLocation);
+
+    // add location to the saved locations array
+    if (savedLocationsArray === null) {
+        savedLocationsArray = [city];
+    } else if (savedLocationsArray.indexOf(city) === -1) {
+        savedLocationsArray.push(city);
+    }
+
+    // save the new array to localStorage
+    localStorage.setItem("searched-cities", JSON.stringify(savedLocationsArray));
+    // console.log(savedLocationsArray);
+    showPrevious();
+
+};
+
+var click = function () {
+    console.log("test");
+    getNPSData();
+    getTickemaster();
+    getCovidData();
+    getWeatherForecast();
 }
 
 // on click for search button icon
-$("#search-btn").on("click", getNPSData);
-$("#search-btn").on("click", getTickemaster);
-console.log('test');
+
+$("#search-btn").on("click", click);
+
+
+$("#city-input").on("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("search-btn").click();
+    }
+});
+
+$("#state-input").on("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("search-btn").click();
+    }
+});
 
 
 
-getNPSData();
-getTickemaster();
-getCovidData();
-getWeatherForecast();
