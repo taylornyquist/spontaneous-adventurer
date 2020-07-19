@@ -143,31 +143,64 @@ function getNPSData() {
             showMoreBtn.removeClass("hide");
         }
     };
-
-
-
 };
-
-
-
 
 var cityName = "nashville";
 
 function getTickemaster() {
+    //Get DOM element for search value to place in API call
+    var searchInput = document.querySelector(".search-city").value;
 
     fetch(
-        "https://app.ticketmaster.com/discovery/v2/events.json?&city=" + cityName + "&apikey=tjyAA0gwpffEVvhQI0s0EEVJT3wznjso"
+        "https://app.ticketmaster.com/discovery/v2/events.json?&city=" + searchInput + "&apikey=tjyAA0gwpffEVvhQI0s0EEVJT3wznjso"
     )
         .then(function (ticketmasterResponse) {
             return ticketmasterResponse.json();
         })
         .then(function (ticketmasterResponse) {
-            console.log(ticketmasterResponse);
-            console.log(ticketmasterResponse._embedded.events[0].name);
-            console.log(ticketmasterResponse._embedded.events[0].url);
+            //Get DOM element for ticketmaster div
+            var ticketmasterEl = document.getElementById("ticketmaster");
+            ticketmasterEl.innerHTML = "<h5>Ticketmaster Events:</h5>";
 
+            //For loop to get data from ticketmaster API
+            for (i = 0; i < 5; i++) {
+                //Get API data for events
+                var eventName = ticketmasterResponse._embedded.events[i].name;
+                var eventDate = ticketmasterResponse._embedded.events[i].dates.start.localDate;
+                var eventTime = ticketmasterResponse._embedded.events[i].dates.start.localTime;
+                var eventVenue = ticketmasterResponse._embedded.events[i]._embedded.venues[0].name;
+                var eventUrl = ticketmasterResponse._embedded.events[i].url;
+
+                //Create DOM element to hold event information
+                var eventList = document.createElement("div")
+
+                //Create DOM element for event name and append to event div
+                var eventNameEl = document.createElement("a");
+                eventNameEl.innerHTML = "What: " + eventName;
+                eventNameEl.href = eventUrl;
+                eventNameEl.target = "_blank";
+                eventList.appendChild(eventNameEl);
+
+                //Create DOM element for event date and append to event div
+                var eventDateEl = document.createElement("span");
+                eventDate = moment(eventDate).format("MM/DD/YYYY");
+                eventTime = moment(eventTime, "HH:mm:ss").format("LT");
+                eventDateEl.innerHTML = "When: " + eventDate + " at " + eventTime;
+                eventList.appendChild(eventDateEl);
+
+                //Create DOM element for event venue and append to event div
+                var eventVenueEl = document.createElement("span");
+                eventVenueEl.innerHTML = "Where: " + eventVenue;
+                eventList.appendChild(eventVenueEl);
+
+                eventList.classList.add("border", "event-div");
+
+                //Append eventList to ticketmaster div
+                ticketmasterEl.append(eventList);
+            }
+            
+            
         })
-
 };
 
 // state must be lowercase and two letter abbreviation, we'll use toLowerCase() method
@@ -292,6 +325,7 @@ var click = function () {
 }
 
 // on click for search button icon
+
 $("#search-btn").on("click", click);
 
 
