@@ -76,3 +76,20 @@ ul {
 .hide {
     display: none;
 }
+
+.img {
+    /* display: flex; */
+    /* margin-left: 0;
+    margin-right: auto; */
+    float: right;
+    width: 35%;
+}
+
+.description {
+    /* display: flex; */
+    /* margin-left: auto;
+    margin-right: 0; */
+    float: left;
+    width: 60%;
+    /* padding-right: 5px; */
+}
