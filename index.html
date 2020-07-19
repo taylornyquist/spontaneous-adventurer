@@ -38,8 +38,10 @@
         <div class="row border">
             <div class="city-search">
                 <h5>Search:</h5>
-                <input type="text" placeholder="City">
-                <input type="text" placeholder="State">
+
+                <input id="city-input" type="text" placeholder="City" class="search-city">
+                <input id="state-input" type="text" placeholder="State">
+
                 <div class="">
                     <button class="btn" id="search-btn" type="submit">
                         <i class="material-icons">search</i>
@@ -53,7 +55,7 @@
 
         <div class="row main-section">
 
-            <div class="three columns border">
+            <div class="three columns border search-history">
                 <h5>Search History:</h5>
                 <button class="button-primary" type="button" class="btn">Search 1</button>
                 <button class="button-primary" type="button" class="btn">Search 2</button>
@@ -65,17 +67,18 @@
 
             <div class="nine columns">
 
-                <div class="row border">
-                    <div class="twelve columns">
-                        <h5>Ticketmaster Events:</h5>
+                <div class="row">
+                    <div class="twelve columns border" id="ticketmaster">
+                        <!-- <h5>Ticketmaster Events:</h5>
+
                         <ul>
-                            <li>Event 1</li>
-                            <li>Event 2</li>
-                            <li>Event 3</li>
-                            <li>Event 4</li>
-                            <li>Event 5</li>
-                            <li>Event 6</li>
-                        </ul>
+                            <li>
+                                <span>What:</span><span class="event-name event-span"></span>
+                                <span>When:</span><span class="event-date event-span"></span><span class="event-time event-span"></span>
+                                <span>Where:</span><span class="event-venue event-span"></span>
+                                <a href="" target="_blank" class="event-url event-span">Get Tickets</a>
+                            </li>
+                        </ul> -->
                     </div>
 
 
