@@ -275,7 +275,8 @@ var saveLocation = function (city) {
     }
 
     // save the new array to localStorage
-    localStorage.setItem("searched-cities", JSON.stringify(savedLocationsArray));
+    localStorage.setItem("city-input", JSON.stringify(savedLocationsArray));
+    localStorage.setItem("state-input", JSON.stringify(savedLocationsArray));
     // console.log(savedLocationsArray);
     showPrevious();
 
