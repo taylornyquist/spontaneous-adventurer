@@ -309,13 +309,14 @@ function getWeatherForecast() {
 };
 
 // local storage function
-var saveLocation = function (#forecast) {
+var saveLocation = function (getNPSData) {
+    console.log(getNPSData);
 
     // add location to the saved locations array
     if (savedLocationsArray === null) {
-        savedLocationsArray = [city];
-    } else if (savedLocationsArray.indexOf(city) === -1) {
-        savedLocationsArray.push(city);
+        savedLocationsArray = [getNPSData];
+    } else if (savedLocationsArray.indexOf(getNPSData) === -1) {
+        savedLocationsArray.push(getNPSData);
     }
 
     // save the new array to localStorage
@@ -323,6 +324,24 @@ var saveLocation = function (#forecast) {
     showPrevious();
 
 };
+
+// showPrevious function to show previously searched items
+var showPrevious = function () {
+
+    if (savedLocationsArray) {
+
+        $("#prev-searches").empty();
+        var btns = $("<div>").attr("class", "list-group");
+        for (var i = 0; i < savedLocationsArray.length; i++) {
+            var locationBtn = $("<button>").attr("class", "loc-btn list-group-item list-group-item-action list-group-item-primary").text(savedLocationsArray[i]);
+            btns.prepend(locationBtn);
+        }
+
+        $("#prev-searches").append(btns);
+
+    }
+};
+
 
 var click = function () {
     console.log("test");
@@ -351,10 +370,3 @@ $("#state-input").on("keyup", function (event) {
         document.getElementById("search-btn").click();
     }
 });
-
-
-
-// var getLocalStorage = function() {
-//     console.log(localStorage.getItem("#city-input"))
-//     console.log(localStorage.getItem("#state-input"))
-// };
