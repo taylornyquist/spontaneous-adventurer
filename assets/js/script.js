@@ -4,6 +4,16 @@ var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
 var stateCode = "tn";
 
+// function to clear out previous NPS and weather divs
+function clear() {
+    // clear all of the previous Ticketmaster data
+    $("#ticketmaster").empty();
+    // clear all of the previous NPS data
+    $("#nationalParks").empty();
+    // clear all of the previous weather data
+    $("#forecast").empty();
+};
+
 function getNPSData() {
 
     fetch(
@@ -145,7 +155,7 @@ function getNPSData() {
     };
 };
 
-var cityName = "nashville";
+// var cityName = "nashville";
 
 function getTickemaster() {
     //Get DOM element for search value to place in API call
@@ -160,7 +170,7 @@ function getTickemaster() {
         .then(function (ticketmasterResponse) {
             //Get DOM element for ticketmaster div
             var ticketmasterEl = document.getElementById("ticketmaster");
-            ticketmasterEl.innerHTML = "<h5>Ticketmaster Events:</h5>";
+            // ticketmasterEl.innerHTML = "<h5>Ticketmaster Events:</h5>";
 
             //For loop to get data from ticketmaster API
             for (i = 0; i < 5; i++) {
@@ -208,7 +218,7 @@ function getTickemaster() {
 
 function getCovidData() {
     // var state = "tn";
-    var state = $("#state-input").val().trim();
+    var state = $("#state-input").val().trim().toLowerCase();
 
     fetch(
         "https://covidtracking.com/api/v1/states/" + state + "/current.json"
@@ -322,6 +332,7 @@ var click = function () {
     getTickemaster();
     getCovidData();
     getWeatherForecast();
+    clear();
 }
 
 // on click for search button icon
