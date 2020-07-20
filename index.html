@@ -32,14 +32,17 @@
         <h5 class="site-describe">A site for spontaneous travelers to plan their last minute trips!</h5>
     </nav>
 
-    <h5 class="covid-warning">Coronavirus Disease 2019 (COVID-19) Warning: <span id="covid-data"></span> Confirmed Cases in <span id="covid-state"></span></h5>
+    <h5 class="covid-warning">Coronavirus Disease 2019 (COVID-19) Warning: <span id="covid-data"></span> Confirmed Cases
+        in <span id="covid-state"></span></h5>
 
     <div class="container main-container">
         <div class="row border">
             <div class="city-search">
                 <h5>Search:</h5>
-                <input type="text" placeholder="City">
-                <input type="text" placeholder="State">
+
+                <input id="city-input" type="text" placeholder="City" class="search-city">
+                <input id="state-input" type="text" placeholder="State">
+
                 <div class="">
                     <button class="btn" id="search-btn" type="submit">
                         <i class="material-icons">search</i>
@@ -53,7 +56,7 @@
 
         <div class="row main-section">
 
-            <div class="three columns border">
+            <div class="three columns border search-history">
                 <h5>Search History:</h5>
                 <button class="button-primary" type="button" class="btn">Search 1</button>
                 <button class="button-primary" type="button" class="btn">Search 2</button>
@@ -65,31 +68,37 @@
 
             <div class="nine columns">
 
-                <div class="row border">
-                    <div class="twelve columns">
+                <div class="row">
+                    <div class="twelve columns border">
                         <h5>Ticketmaster Events:</h5>
-                        <ul>
-                            <li>Event 1</li>
-                            <li>Event 2</li>
-                            <li>Event 3</li>
-                            <li>Event 4</li>
-                            <li>Event 5</li>
-                            <li>Event 6</li>
-                        </ul>
+                        <div id="ticketmaster">
+
+                        <!-- <ul>
+                            <li>
+                                <span>What:</span><span class="event-name event-span"></span>
+                                <span>When:</span><span class="event-date event-span"></span><span class="event-time event-span"></span>
+                                <span>Where:</span><span class="event-venue event-span"></span>
+                                <a href="" target="_blank" class="event-url event-span">Get Tickets</a>
+                            </li>
+                        </ul> -->
+                        
+                        </div>
                     </div>
 
 
                 </div>
 
-                <div class="row border" id="nationalParks">
+                <div class="row border">
                     <h5>National Park Information:</h5>
-                    <!-- <ul>
+                    <div id="nationalParks">
+                        <!-- <ul>
                         <li>Park 1 Info</li>
                         <li>Park 2 Info</li>
                         <li>Park 3 Info</li>
                         <li>Park 4 Info</li>
                         <li>Park 5 Info</li>
                     </ul> -->
+                    </div>
                 </div>
 
             </div>
