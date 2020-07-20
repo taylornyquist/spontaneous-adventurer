@@ -344,6 +344,7 @@ var showPrevious = function () {
     }
 };
 
+
 var click = function () {
     console.log("test");
     getNPSData();
