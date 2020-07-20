@@ -293,12 +293,12 @@ var click = function() {
 $("#search-btn").on("click", click);
 
 
-// $("#search-input").on("keyup", function (event) {
-//     if (event.keyCode === 13) {
-//         event.preventDefault();
-//         document.getElementById("search-btn").click();
-//     }
-// })
+$("#search-input").on("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("search-btn").click();
+    }
+})
 
 
 
