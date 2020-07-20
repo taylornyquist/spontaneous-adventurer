@@ -1,6 +1,20 @@
 // add saved locations array (not sure if we need this?)
 var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
 
+var initialize = function () {
+
+    // console.log(savedLocationsArray);
+
+    if (savedLocationsArray) {
+        getCurrent(savedLocationsArray[savedLocationsArray.length - 1])
+        showPrevious();
+
+    } else {
+        // If no saved locations, default to nashville
+        getCurrent("nashville");
+    }
+};
+
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
 var stateCode = "tn";
 
@@ -282,6 +296,20 @@ var saveLocation = function (city) {
 
 };
 
+// showPrevious function for search buttons pulled from local storage
+var showPrevious = function() {
+    if (savedLocationsArray) {
+        $("#search").empty();
+        var btns = $("<div>").attr("class", "list-group");
+        for (var i = 0; i < savedLocationsArray.length; i++) {
+            var locationBtn = $("<button>").attr("class", "loc-btn list-group-item list-group-item-action list-group-item-primary").text(savedLocationsArray[i]);
+            btns.prepend(locationBtn);
+        }
+
+        $("#prev-searches").append(btns);
+    }
+};
+
 var click = function() {
     console.log("test");
     getNPSData();
@@ -294,12 +322,18 @@ var click = function() {
 $("#search-btn").on("click", click);
 
 
-$("#search-input").on("keyup", function (event) {
+$("#city-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
         event.preventDefault();
         document.getElementById("search-btn").click();
     }
-})
+});
 
+$("#state-input").on("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("search-btn").click();
+    }
+});
 
 
