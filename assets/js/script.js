@@ -1,4 +1,3 @@
-// add saved locations array (not sure if we need this?)
 var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
 
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
@@ -320,11 +319,31 @@ var saveLocation = function (city) {
     }
 
     // save the new array to localStorage
-    localStorage.setItem("searched-cities", JSON.stringify(savedLocationsArray));
+    localStorage.setItem("city-input", JSON.stringify(savedLocationsArray));
+    localStorage.setItem("state-input", JSON.stringify(savedLocationsArray));
     // console.log(savedLocationsArray);
     showPrevious();
 
 };
+
+
+// function showPrevious shows the previously searched locations pulled from local storage
+var showPrevious = function () {
+
+    if (savedLocationsArray) {
+
+        $("#prev-searches").empty();
+        var btns = $("<div>").attr("class", "list-group");
+        for (var i = 0; i < savedLocationsArray.length; i++) {
+            var locationBtn = $("<button>").attr("class", "loc-btn list-group-item list-group-item-action list-group-item-primary").text(savedLocationsArray[i]);
+            btns.prepend(locationBtn);
+        }
+
+        $("#prev-searches").append(btns);
+
+    }
+};
+
 
 var click = function () {
     console.log("test");
