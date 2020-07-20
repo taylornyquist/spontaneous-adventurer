@@ -1,3 +1,6 @@
+//variables for local storage searches
+var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
+
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
 var stateCode = "tn";
 
@@ -306,8 +309,7 @@ function getWeatherForecast() {
 };
 
 // local storage function
-var saveLocation = function (city) {
-    // console.log(cityLocation);
+var saveLocation = function (#forecast) {
 
     // add location to the saved locations array
     if (savedLocationsArray === null) {
@@ -317,9 +319,7 @@ var saveLocation = function (city) {
     }
 
     // save the new array to localStorage
-    localStorage.setItem("city-input", JSON.stringify(savedLocationsArray));
-    localStorage.setItem("state-input", JSON.stringify(savedLocationsArray));
-    // console.log(savedLocationsArray);
+    localStorage.setItem("searched-cities", JSON.stringify(savedLocationsArray));
     showPrevious();
 
 };
