@@ -1,8 +1,20 @@
+
 //variables for local storage searches
+
 var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
 
+// function to clear out previous NPS and weather divs
+function clear() {
+    // clear all of the previous Ticketmaster data
+    $("#ticketmaster").empty();
+    // clear all of the previous NPS data
+    $("#nationalParks").empty();
+    // clear all of the previous weather data
+    $("#forecast").empty();
+};
+
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
-var stateCode = "tn";
+// var stateCode = "tn";
 
 // function to clear out previous NPS and weather divs
 function clear() {
@@ -16,8 +28,10 @@ function clear() {
 
 function getNPSData() {
 
+    var state = $("#state-input").val().trim().toLowerCase();
+
     fetch(
-        "https://developer.nps.gov/api/v1/parks?parkCode=&stateCode=" + stateCode + "&api_key=VWQc76Xi1MA1G7mT3R2RbvodV6ongjdqKvID51cV"
+        "https://developer.nps.gov/api/v1/parks?parkCode=&stateCode=" + state + "&api_key=VWQc76Xi1MA1G7mT3R2RbvodV6ongjdqKvID51cV"
     )
 
         .then(function (NPSResponse) {
@@ -30,7 +44,7 @@ function getNPSData() {
             var nationalParkSlot = document.createElement("ul");
             nationalParkSlot.setAttribute("id", "npList")
             var nationalParksListed = NPSResponse.data;
-            console.log(NPSResponse);
+            // console.log(NPSResponse);
 
             //loop through all park responses
             for (i = 0; i < NPSResponse.data.length; i++) {
@@ -69,7 +83,8 @@ function getNPSData() {
                     //    console.log(parkImage);
 
                     // })
-                    console.log(nationalParkImageUrl);
+
+                    // console.log(nationalParkImageUrl);
                 } else {
                     console.log("No images available")
 
@@ -228,8 +243,8 @@ function getCovidData() {
             return CovidResponse.json();
         })
         .then(function (CovidResponse) {
-            console.log(CovidResponse);
-            console.log(CovidResponse.positive);
+            // console.log(CovidResponse);
+            // console.log(CovidResponse.positive);
 
             var covidPositive = (CovidResponse.positive).toLocaleString();
             $("#covid-data").text(covidPositive);
@@ -243,9 +258,69 @@ function getCovidData() {
 
 };
 
-var city = "nashville"
+// var city = "nashville"
+
+function getCurrent() {
+
+    var city = document.querySelector(".search-city").value;
+
+    fetch(
+        "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=1a779978d53b819f8904840069dffbb8&units=imperial"
+    )
+        .then(function (currentResponse) {
+            return currentResponse.json();
+        })
+        .then(function (currentResponse) {
+            // console.log(currentResponse);
+
+            // generate header for section
+            $("#weather-header").text("Weather for " + currentResponse.name + ":");
+
+            // create card to hold current weather data
+            var currentCardEl = document.createElement("div");
+            currentCardEl.classList.add("two", "columns", "card", "border");
+
+            // create card header with city name
+            var currentCardHeaderEl = document.createElement("div");
+            currentCardHeaderEl.textContent = "Current";
+
+            // create element and pull icon depicting current weather conditions
+            var currentIconDiv = document.createElement("div");
+            var currentIconEl = document.createElement("img");
+            currentIconEl.src = "https://openweathermap.org/img/wn/" + currentResponse.weather[0].icon + ".png";
+            currentIconEl.alt = currentResponse.weather[0].description;
+            currentIconEl.setAttribute("class", "icon");
+
+            // create div element for temp and humidity <p> tags
+            var currentCardBody = document.createElement("div");
+            currentCardBody.setAttribute("class", "card-body");
+
+            // create element and pull temperature
+            var currentTempEl = document.createElement("p");
+            currentTempEl.innerHTML = "<p>Temp: " + currentResponse.main.temp + "&degF</p>";
+
+            // create element and pull humidity level
+            var currentHumidityEl = document.createElement("p");
+            currentHumidityEl.textContent = "Humidity: " + currentResponse.main.humidity + "%";
+
+            // append all elements to cards
+            currentCardEl.appendChild(currentCardHeaderEl);
+            currentCardEl.appendChild(currentIconDiv);
+            currentIconDiv.appendChild(currentIconEl);
+            currentCardEl.appendChild(currentCardBody);
+            currentCardBody.appendChild(currentTempEl);
+            currentCardBody.appendChild(currentHumidityEl);
+
+            // append current weather card to the page
+            $("#forecast").append(currentCardEl);
+
+        });    
+};
 
 function getWeatherForecast() {
+
+    var city = document.querySelector(".search-city").value;
+
     fetch(
         "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=23374a7ea0862c1bbdc6d9a18c5c0b7a"
     )
@@ -289,6 +364,7 @@ function getWeatherForecast() {
                     //create element and pull temperature for each instance 
                     var tempEl = document.createElement("p");
                     tempEl.innerHTML = "<p>Temp: " + weatherResponse.list[i].main.temp + "&degF</p>";
+
                     //create element and pull humidity level for each instance
                     var humidityEl = document.createElement("p");
                     humidityEl.textContent = "Humidity: " + weatherResponse.list[i].main.humidity + "%";
@@ -325,7 +401,9 @@ var saveLocation = function (getNPSData) {
 
 };
 
+
 // showPrevious function to show previously searched items
+
 var showPrevious = function () {
 
     if (savedLocationsArray) {
@@ -344,10 +422,13 @@ var showPrevious = function () {
 
 
 var click = function () {
+
     console.log("test");
+
     getNPSData();
     getTickemaster();
     getCovidData();
+    getCurrent();
     getWeatherForecast();
     clear();
 }
@@ -358,6 +439,7 @@ $("#search-btn").on("click", click);
 
 
 $("#city-input").on("keyup", function (event) {
+
     if (event.keyCode === 13) {
         event.preventDefault();
         document.getElementById("search-btn").click();
