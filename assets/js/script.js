@@ -1,4 +1,10 @@
-var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
+// var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
+var savedLocationsObject = {
+    cityArray: [],
+    stateArray: [],
+};
+
+console.log(savedLocationsObject);
 
 // function to clear out previous NPS and weather divs
 function clear() {
@@ -209,8 +215,8 @@ function getTickemaster() {
                 //Append eventList to ticketmaster div
                 ticketmasterEl.append(eventList);
             }
-            
-            
+
+
         })
 };
 
@@ -300,7 +306,7 @@ function getCurrent() {
             // append current weather card to the page
             $("#forecast").append(currentCardEl);
 
-        });    
+        });
 };
 
 function getWeatherForecast() {
@@ -371,21 +377,37 @@ function getWeatherForecast() {
 };
 
 // local storage function
-var saveLocation = function (city) {
-    // console.log(cityLocation);
+var saveLocation = function () {
+
+    var city = $("#city-input").val().trim().toLowerCase();
+    var state = $("#state-input").val().trim().toUpperCase();
+
+    console.log(city);
+    console.log(state);
 
     // add location to the saved locations array
-    if (savedLocationsArray === null) {
-        savedLocationsArray = [city];
-    } else if (savedLocationsArray.indexOf(city) === -1) {
-        savedLocationsArray.push(city);
-    }
+    // if (savedLocationsArray === null) {
+    //     savedLocationsArray = [city];
+    // } else 
+    // if (savedLocationsArray.indexOf(city) === -1) {
+
+    // }
+
+    // if (savedLocationsObject === null) {
+    //     savedLocationsObject = {
+    //         cityArray: [city],
+    //         stateArray: [state],
+    //     };
+
+    savedLocationsObject.cityArray.push(city);
+    savedLocationsObject.stateArray.push(state);
 
     // save the new array to localStorage
-    localStorage.setItem("city-input", JSON.stringify(savedLocationsArray));
-    localStorage.setItem("state-input", JSON.stringify(savedLocationsArray));
-    // console.log(savedLocationsArray);
+    localStorage.setItem("searched-location", JSON.stringify(savedLocationsObject));
+    console.log(savedLocationsObject);
     showPrevious();
+
+    // };
 
 };
 
@@ -393,16 +415,17 @@ var saveLocation = function (city) {
 // function showPrevious shows the previously searched locations pulled from local storage
 var showPrevious = function () {
 
-    if (savedLocationsArray) {
+    if (savedLocationsObject) {
 
         $("#prev-searches").empty();
-        var btns = $("<div>").attr("class", "list-group");
-        for (var i = 0; i < savedLocationsArray.length; i++) {
-            var locationBtn = $("<button>").attr("class", "loc-btn list-group-item list-group-item-action list-group-item-primary").text(savedLocationsArray[i]);
-            btns.prepend(locationBtn);
-        }
 
-        $("#prev-searches").append(btns);
+        for (var i = 0; i < savedLocationsObject.cityArray.length; i++) {
+
+            var locationBtn = $("<button>").attr("type", "button").attr("class", "button-primary btn").text(savedLocationsObject.cityArray[i]);
+            // + ", " + savedLocationsObject.stateArray[i]
+            $("#prev-searches").prepend(locationBtn);
+
+        }
 
     }
 };
@@ -410,6 +433,7 @@ var showPrevious = function () {
 
 var click = function () {
 
+    saveLocation();
     getNPSData();
     getTickemaster();
     getCovidData();
@@ -435,6 +459,12 @@ $("#state-input").on("keyup", function (event) {
         event.preventDefault();
         document.getElementById("search-btn").click();
     }
+});
+
+// on click for previously saved locations
+$(document).on("click", ".btn", function () {
+    cityLocation = $(this)[0].innerHTML;
+    click();
 });
 
 
