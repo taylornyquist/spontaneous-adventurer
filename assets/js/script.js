@@ -1,3 +1,5 @@
+var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
+
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
 var stateCode = "tn";
 
