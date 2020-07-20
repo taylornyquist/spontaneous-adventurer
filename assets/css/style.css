@@ -100,6 +100,50 @@ ul {
     display: none;
 }
 
+.img {
+    float: right;
+    width: 35%;
+    margin-top: 10px;
+    max-height: 175px;
+}
+
+.park {
+    font-weight: 500; 
+    margin: 0;
+    color: white;
+}
+
+.park:hover {
+    color: white;
+}
+
+.parkItem {
+    clear: right;
+    clear: left;
+    background-color: #33C3F0;
+    color: white;
+    padding: 5px;
+    align-self: center;
+}
+
+.parkItem:hover {
+    background-color: #0FA0CE;
+}
+
+.description {
+    margin-top: 10px;
+    float: left;
+    width: 60%;
+    font-weight: 200;
+    color: #222;
+}
+
+.more-btn {
+    clear: right;
+    clear: left;
+    float: left;
+}
+
 /* Media Query */
 @media screen and (max-width: 768px) {
     .city-search input {
@@ -110,5 +154,20 @@ ul {
         width: 80%;
         padding: 0 5px;
     } 
+
+    .description {
+        width: 100%;
+    }
+
+    .img {
+        width: 100%;
+    }
+
+    .park {
+        font-size: 1.8rem; 
+        margin-top: 0;
+        margin-bottom: 2rem;
+        font-weight: 300; 
+    }
 
 }

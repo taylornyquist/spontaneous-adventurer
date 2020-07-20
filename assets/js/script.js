@@ -44,15 +44,23 @@ function getNPSData() {
             var nationalParkSlot = document.createElement("ul");
             nationalParkSlot.setAttribute("id", "npList")
             var nationalParksListed = NPSResponse.data;
-            // console.log(NPSResponse);
+
+
+            console.log(NPSResponse);
 
             //loop through all park responses
             for (i = 0; i < NPSResponse.data.length; i++) {
 
-                //for each park listed, pull name and url
-                var nationalParkName = NPSResponse.data[i].fullName;
-                var nationalParkURL = NPSResponse.data[i].url;
-                var nationalParkImage = NPSResponse.data[i].images;
+                var nationalParkResponse = NPSResponse.data[i];
+
+                //for each park listed, pull name and url, description and image
+                var nationalParkName = nationalParkResponse.fullName;
+                var nationalParkURL = nationalParkResponse.url;
+                var nationalParkDescription = nationalParkResponse.description;
+                var nationalParkImage = nationalParkResponse.images;
+                var missingImage = document.createElement("button");
+                missingImage.textContent = "No images available.";
+                missingImage.setAttribute("class", "hide");
 
                 // debugger;
                 if (nationalParkImage[0]) {
@@ -65,52 +73,69 @@ function getNPSData() {
                     $(nationalParkItem).hover(showImage, removeImage);
 
                     var showImage = function () {
-                        var parkImage = $(this).children("img");
+                        var parkImage = $(this).children("div");
                         parkImage.removeClass("hide");
                     };
 
                     var removeImage = function () {
-                        var parkImage = $(this).children("img");
+                        var parkImage = $(this).children("div");
                         parkImage.addClass("hide");
                     }
-                    //     var selectedPark = $(this)
-                    //     var parkImages = $(this).images;
-                    //     console.log(selectedPark);
-                    //     var parkImageURL = NPSResponse.data[i].images[0].url;
-                    //    var parkImageEl = document.createElement("img");
 
-                    //    parkImageEl.src = parkImageURL;
-                    //    console.log(parkImage);
-
-                    // })
-
-                    // console.log(nationalParkImageUrl);
                 } else {
-                    console.log("No images available")
-
+                    //still working on placeholder to show up when no image is available - currently it pulls image from previous park
+                    // nationalParkImageEl.addClass("hide");
+                    var parkBtn = $(this).children("button");
+                    parkBtn.removeClass("hide");
                 }
+
                 //for each park listed, create a list item and "a" element
                 var nationalParkItem = document.createElement("li");
-                var nationalParkItemLinked = document.createElement("a")
-                //for each park listed, assign park name and link
-                nationalParkItemLinked.textContent = nationalParkName;
+                nationalParkItem.setAttribute("class", "parkItem");
+                var nationalParkItemLinked = document.createElement("a");
+                nationalParkItemLinked.setAttribute("class", "park");
+                nationalParkItemLinked.setAttribute("target", "_blank");
                 nationalParkItemLinked.href = nationalParkURL;
+
+                //create a div to hold image and description
+                var nationalParkAdditionalInfoEl = document.createElement("div");
+                // nationalParkAdditionalInfoEl.setAttribute("id", "info")
+                //add description below each park name
+                var nationalParkDescriptionEl = document.createElement("p");
+                nationalParkDescriptionEl.textContent = nationalParkDescription;
+                nationalParkDescriptionEl.setAttribute("class", "description")
                 //add image to each element
                 var nationalParkImageEl = document.createElement("img")
                 nationalParkImageEl.src = nationalParkImageUrl;
-                nationalParkImageEl.height = "150";
-                nationalParkImageEl.style.cssFloat = "right";
                 nationalParkImageEl.alt = nationalParkImageAlt;
-                nationalParkImageEl.setAttribute("class", "hide");
+                nationalParkImageEl.setAttribute("class", "img");
+                nationalParkAdditionalInfoEl.setAttribute("class", "hide");
+
+                // for each park listed, iterate through addresses and pull city/state for physical address
+                for (j = 0; j < nationalParkResponse.addresses.length; j++) {
+
+                    if (nationalParkResponse.addresses[j].type === "Physical") {
+
+                        nationalParkCity = nationalParkResponse.addresses[j].city;
+                        nationalParkState = nationalParkResponse.addresses[j].stateCode;
+                        // console.log(nationalParkCity);
+                        // console.log(nationalParkState);
+                        nationalParkLocation = nationalParkCity + ", " + nationalParkState;
+                    }
+                }
+
+                //assign name and location to park listing
+                nationalParkItemLinked.innerText = nationalParkName + " - " + nationalParkLocation;
+
                 //for each park listed, append link and item to ul
-                nationalParkItem.append(nationalParkImageEl);
+                nationalParkAdditionalInfoEl.append(nationalParkDescriptionEl);
+                nationalParkAdditionalInfoEl.append(nationalParkImageEl);
+                nationalParkAdditionalInfoEl.append(missingImage);
                 nationalParkItem.append(nationalParkItemLinked);
+                nationalParkItem.append(nationalParkAdditionalInfoEl);
+                // nationalParkItem.append(nationalParkImageEl);
                 nationalParkSlot.appendChild(nationalParkItem);
                 nationalParksEl.appendChild(nationalParkSlot);
-
-                //display image of park on hover
-
-
 
                 //limit parks listed to 5
                 if (i >= 5) {
@@ -120,21 +145,21 @@ function getNPSData() {
             //create button below abbreviated list to show more results
             if (nationalParksListed.length >= 5) {
                 var showMoreEl = document.createElement("button");
+                showMoreEl.setAttribute("class", "more-btn");
                 showMoreEl.textContent = "Show More";
                 nationalParksEl.appendChild(showMoreEl);
                 showMoreEl.addEventListener("click", showMore);
                 var showLessEl = document.createElement("button");
                 showLessEl.textContent = "Show Less";
+                showLessEl.setAttribute("class", "more-btn");
                 showLessEl.setAttribute("class", "hide");
+
                 nationalParksEl.appendChild(showLessEl);
                 showLessEl.addEventListener("click", showLess);
-
             }
-
-
-
-
         })
+
+    //function to show more results
     var showMore = function () {
         var listItems = $(this).siblings("ul");
         var showLessBtn = $(this).siblings("button")
@@ -149,6 +174,7 @@ function getNPSData() {
         }
     }
 
+    //function to show fewer results
     var showLess = function () {
         var listItems = $(this).siblings("ul");
         var showMoreBtn = $(this).siblings("button")
@@ -223,8 +249,6 @@ function getTickemaster() {
                 //Append eventList to ticketmaster div
                 ticketmasterEl.append(eventList);
             }
-            
-            
         })
 };
 
@@ -314,7 +338,7 @@ function getCurrent() {
             // append current weather card to the page
             $("#forecast").append(currentCardEl);
 
-        });    
+        });
 };
 
 function getWeatherForecast() {
