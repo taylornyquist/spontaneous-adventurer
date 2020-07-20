@@ -44,8 +44,8 @@ function getNPSData() {
             var nationalParkSlot = document.createElement("ul");
             nationalParkSlot.setAttribute("id", "npList")
             var nationalParksListed = NPSResponse.data;
-           
-            
+
+
             console.log(NPSResponse);
 
             //loop through all park responses
@@ -60,7 +60,7 @@ function getNPSData() {
                 var nationalParkImage = nationalParkResponse.images;
                 var missingImage = document.createElement("button");
                 missingImage.textContent = "No images available.";
-            missingImage.setAttribute("class", "hide");
+                missingImage.setAttribute("class", "hide");
 
                 // debugger;
                 if (nationalParkImage[0]) {
@@ -73,15 +73,15 @@ function getNPSData() {
                     $(nationalParkItem).hover(showImage, removeImage);
 
                     var showImage = function () {
-                        var parkImage = $(this).children("img");
+                        var parkImage = $(this).children("div");
                         parkImage.removeClass("hide");
                     };
 
                     var removeImage = function () {
-                        var parkImage = $(this).children("img");
+                        var parkImage = $(this).children("div");
                         parkImage.addClass("hide");
                     }
-             
+
                 } else {
                     //still working on placeholder to show up when no image is available - currently it pulls image from previous park
                     // nationalParkImageEl.addClass("hide");
@@ -89,14 +89,14 @@ function getNPSData() {
                     parkBtn.removeClass("hide");
                 }
 
-                      //for each park listed, create a list item and "a" element
+                //for each park listed, create a list item and "a" element
                 var nationalParkItem = document.createElement("li");
                 nationalParkItem.setAttribute("class", "parkItem");
                 var nationalParkItemLinked = document.createElement("a");
                 nationalParkItemLinked.setAttribute("class", "park");
                 nationalParkItemLinked.setAttribute("target", "_blank");
                 nationalParkItemLinked.href = nationalParkURL;
-                        
+
                 //create a div to hold image and description
                 var nationalParkAdditionalInfoEl = document.createElement("div");
                 // nationalParkAdditionalInfoEl.setAttribute("id", "info")
@@ -111,22 +111,22 @@ function getNPSData() {
                 nationalParkImageEl.setAttribute("class", "img");
                 nationalParkAdditionalInfoEl.setAttribute("class", "hide");
 
-                                // for each park listed, iterate through addresses and pull city/state for physical address
-                 for (j = 0; j < nationalParkResponse.addresses.length; j++) {
+                // for each park listed, iterate through addresses and pull city/state for physical address
+                for (j = 0; j < nationalParkResponse.addresses.length; j++) {
 
                     if (nationalParkResponse.addresses[j].type === "Physical") {
-                
+
                         nationalParkCity = nationalParkResponse.addresses[j].city;
                         nationalParkState = nationalParkResponse.addresses[j].stateCode;
                         // console.log(nationalParkCity);
                         // console.log(nationalParkState);
                         nationalParkLocation = nationalParkCity + ", " + nationalParkState;
-                                       }
+                    }
                 }
 
                 //assign name and location to park listing
                 nationalParkItemLinked.innerText = nationalParkName + " - " + nationalParkLocation;
-               
+
                 //for each park listed, append link and item to ul
                 nationalParkAdditionalInfoEl.append(nationalParkDescriptionEl);
                 nationalParkAdditionalInfoEl.append(nationalParkImageEl);
@@ -153,13 +153,13 @@ function getNPSData() {
                 showLessEl.textContent = "Show Less";
                 showLessEl.setAttribute("class", "more-btn");
                 showLessEl.setAttribute("class", "hide");
-               
+
                 nationalParksEl.appendChild(showLessEl);
                 showLessEl.addEventListener("click", showLess);
             }
         })
 
-        //function to show more results
+    //function to show more results
     var showMore = function () {
         var listItems = $(this).siblings("ul");
         var showLessBtn = $(this).siblings("button")
