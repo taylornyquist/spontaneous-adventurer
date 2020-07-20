@@ -60,17 +60,7 @@ function getNPSData() {
                         var parkImage = $(this).children("img");
                         parkImage.addClass("hide");
                     }
-                    //     var selectedPark = $(this)
-                    //     var parkImages = $(this).images;
-                    //     console.log(selectedPark);
-                    //     var parkImageURL = NPSResponse.data[i].images[0].url;
-                    //    var parkImageEl = document.createElement("img");
-
-                    //    parkImageEl.src = parkImageURL;
-                    //    console.log(parkImage);
-
-                    // })
-                    // console.log(nationalParkImageUrl);
+             
                 } else {
                     console.log("No images available")
 
@@ -94,10 +84,6 @@ function getNPSData() {
                 nationalParkSlot.appendChild(nationalParkItem);
                 nationalParksEl.appendChild(nationalParkSlot);
 
-                //display image of park on hover
-
-
-
                 //limit parks listed to 5
                 if (i >= 5) {
                     nationalParkItem.classList.add("hide");
@@ -114,13 +100,9 @@ function getNPSData() {
                 showLessEl.setAttribute("class", "hide");
                 nationalParksEl.appendChild(showLessEl);
                 showLessEl.addEventListener("click", showLess);
-
             }
-
-
-
-
         })
+
     var showMore = function () {
         var listItems = $(this).siblings("ul");
         var showLessBtn = $(this).siblings("button")
@@ -209,8 +191,6 @@ function getTickemaster() {
                 //Append eventList to ticketmaster div
                 ticketmasterEl.append(eventList);
             }
-            
-            
         })
 };
 
@@ -300,7 +280,7 @@ function getCurrent() {
             // append current weather card to the page
             $("#forecast").append(currentCardEl);
 
-        });    
+        });
 };
 
 function getWeatherForecast() {
