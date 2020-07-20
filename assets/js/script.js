@@ -1,3 +1,6 @@
+
+//variables for local storage searches
+
 var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
 
 // function to clear out previous NPS and weather divs
@@ -12,6 +15,16 @@ function clear() {
 
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
 // var stateCode = "tn";
+
+// function to clear out previous NPS and weather divs
+function clear() {
+    // clear all of the previous Ticketmaster data
+    $("#ticketmaster").empty();
+    // clear all of the previous NPS data
+    $("#nationalParks").empty();
+    // clear all of the previous weather data
+    $("#forecast").empty();
+};
 
 function getNPSData() {
 
@@ -57,19 +70,18 @@ function getNPSData() {
 
 
                     //add function to show image upon hover
-                    $(nationalParkItem).hover(showImage, removeImage); 
-                        
-                        var showImage = function() {
-                        var parkInfo = $(this).children("div");
-                        parkInfo.removeClass("hide");
-                        };
+                    $(nationalParkItem).hover(showImage, removeImage);
 
-                        var removeImage = function() {
-                            var parkInfo = $(this).children("div");
-                            parkInfo.addClass("hide");
-                        }
+                    var showImage = function () {
+                        var parkImage = $(this).children("img");
+                        parkImage.removeClass("hide");
+                    };
 
-                    // console.log(nationalParkImageUrl);
+                    var removeImage = function () {
+                        var parkImage = $(this).children("img");
+                        parkImage.addClass("hide");
+                    }
+             
                 } else {
                     //still working on placeholder to show up when no image is available - currently it pulls image from previous park
                     // nationalParkImageEl.addClass("hide");
@@ -237,8 +249,6 @@ function getTickemaster() {
                 //Append eventList to ticketmaster div
                 ticketmasterEl.append(eventList);
             }
-            
-            
         })
 };
 
@@ -328,7 +338,7 @@ function getCurrent() {
             // append current weather card to the page
             $("#forecast").append(currentCardEl);
 
-        });    
+        });
 };
 
 function getWeatherForecast() {
@@ -399,26 +409,25 @@ function getWeatherForecast() {
 };
 
 // local storage function
-var saveLocation = function (city) {
-    // console.log(cityLocation);
+var saveLocation = function (getNPSData) {
+    console.log(getNPSData);
 
     // add location to the saved locations array
     if (savedLocationsArray === null) {
-        savedLocationsArray = [city];
-    } else if (savedLocationsArray.indexOf(city) === -1) {
-        savedLocationsArray.push(city);
+        savedLocationsArray = [getNPSData];
+    } else if (savedLocationsArray.indexOf(getNPSData) === -1) {
+        savedLocationsArray.push(getNPSData);
     }
 
     // save the new array to localStorage
-    localStorage.setItem("city-input", JSON.stringify(savedLocationsArray));
-    localStorage.setItem("state-input", JSON.stringify(savedLocationsArray));
-    // console.log(savedLocationsArray);
+    localStorage.setItem("searched-cities", JSON.stringify(savedLocationsArray));
     showPrevious();
 
 };
 
 
-// function showPrevious shows the previously searched locations pulled from local storage
+// showPrevious function to show previously searched items
+
 var showPrevious = function () {
 
     if (savedLocationsArray) {
@@ -438,6 +447,8 @@ var showPrevious = function () {
 
 var click = function () {
 
+    console.log("test");
+
     getNPSData();
     getTickemaster();
     getCovidData();
@@ -452,6 +463,7 @@ $("#search-btn").on("click", click);
 
 
 $("#city-input").on("keyup", function (event) {
+
     if (event.keyCode === 13) {
         event.preventDefault();
         document.getElementById("search-btn").click();
@@ -464,6 +476,3 @@ $("#state-input").on("keyup", function (event) {
         document.getElementById("search-btn").click();
     }
 });
-
-
-
