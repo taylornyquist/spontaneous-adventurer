@@ -6,7 +6,7 @@ var loadHistory = function () {
         savedLocationsArray = [];
     };
 
-    console.log(savedLocationsArray);
+    // console.log(savedLocationsArray);
     showPrevious();
 };
 
@@ -393,35 +393,19 @@ var saveLocation = function (city, state) {
     console.log(city);
     console.log(state);
 
-    if (savedLocationsArray === null) {
-        savedLocationsArray = [];
-    } else {
-        
-        var newSearch =
-            { "city": city, "state": state };
+    var newSearch =
+        { "city": city, "state": state };
 
-        for (i = 0; i < savedLocationsArray.length; i++) {
-            console.log("hi");
+    // add the newSearch object to the savedLocationsArray
+    savedLocationsArray.push(newSearch);
+    // console.log(savedLocationsArray);
 
-            // if (newSearch.city === savedLocationsArray[i].city && newSearch.state === savedLocationsArray[i].state) {
-            //     console.log("nope!");
+    // save the new array to localStorage
+    localStorage.setItem("searched-location", JSON.stringify(savedLocationsArray));
 
-            // } else {
-            //     savedLocationsArray.push(newSearch);
-
-            //     console.log(savedLocationsArray);
-
-            //     // save the new array to localStorage
-            //     localStorage.setItem("searched-location", JSON.stringify(savedLocationsArray));
-            //     // console.log(savedLocationsObject);
-            //     showPrevious();
-
-            //     // };
-            // };
-        };
-    };
+    // call the showPrevious function to populate search history side bar
+    showPrevious();
 };
-
 
 // function showPrevious shows the previously searched locations pulled from local storage
 var showPrevious = function () {
@@ -436,10 +420,8 @@ var showPrevious = function () {
             $("#prev-searches").prepend(locationBtn);
 
         }
-
     }
 };
-
 
 var click = function () {
 
