@@ -100,6 +100,15 @@ ul {
     display: block;
 }
 
+.button-primary {
+    width: 100%;
+    padding: 0 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* text-align: left; */
+} 
+
 /* Media Query */
 @media screen and (max-width: 768px) {
     .city-search input {
@@ -110,5 +119,11 @@ ul {
         width: 80%;
         padding: 0 5px;
     } 
+}
 
+@media screen and (max-width: 550px) {
+    .button-primary {
+        width: 100%;
+        padding: 0 5px;
+    } 
 }
