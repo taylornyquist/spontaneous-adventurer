@@ -12,11 +12,16 @@
 * [Contribution](#contribution)
 
 ## Concept
-Description here
 
-Motivation for development here
+### User Story
+AS A person living through the Covid-19 pandemic
+I WANT to get out of the house.
+HOWEVER, current conditions prevent me from planning my travel too far in advance.
+I NEED a way to plan for last-minute trips.
 
-User story here
+The Spontaneous Adventurer serves as a guide for last-minute getaways and day trips, providing current information on events, nearby parks, weather conditions, and current COVID-19 conditions in a given location. 
+
+In this time of uncertainty, a last-minute getaway can reduce anxiety that comes from staying home. The Spontaneous Adventurer provides the information needed to plan a successful adventure at a traveler's fingertips.
 
 ## Process
 Technologies used
