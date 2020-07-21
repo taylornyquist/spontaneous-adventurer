@@ -1,3 +1,21 @@
+var savedLocationsArray = JSON.parse(localStorage.getItem("searched-location"));
+
+var loadHistory = function () {
+
+    if (!savedLocationsArray) {
+        savedLocationsArray = [];
+    };
+
+    // console.log(savedLocationsArray);
+    showPrevious(savedLocationsArray);
+};
+
+var showData = function () {
+
+        // show data-section and weather-forecast (hidden on page load)
+        $(".data-section").addClass("show");
+        $(".weather-forecast").addClass("show");
+};
 
 //variables for local storage searches
 
@@ -5,6 +23,9 @@ var savedLocationsArray = JSON.parse(localStorage.getItem("searched-cities"));
 
 // function to clear out previous NPS and weather divs
 function clear() {
+    // clear the city and state input boxes
+    $("#city-input").val("");
+    $("#state-input").val("");
     // clear all of the previous Ticketmaster data
     $("#ticketmaster").empty();
     // clear all of the previous NPS data
@@ -15,6 +36,9 @@ function clear() {
 
 // seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
 // var stateCode = "tn";
+
+
+function getNPSData(state) {
 
 // function to clear out previous NPS and weather divs
 function clear() {
@@ -28,7 +52,7 @@ function clear() {
 
 function getNPSData() {
 
-    var state = $("#state-input").val().trim().toLowerCase();
+    // var state = $("#state-input").val().trim().toLowerCase();
 
     fetch(
         "https://developer.nps.gov/api/v1/parks?parkCode=&stateCode=" + state + "&api_key=VWQc76Xi1MA1G7mT3R2RbvodV6ongjdqKvID51cV"
@@ -198,12 +222,12 @@ function getNPSData() {
 
 // var cityName = "nashville";
 
-function getTickemaster() {
+function getTickemaster(city) {
     //Get DOM element for search value to place in API call
-    var searchInput = document.querySelector(".search-city").value;
+    // var searchInput = document.querySelector(".search-city").value;
 
     fetch(
-        "https://app.ticketmaster.com/discovery/v2/events.json?&city=" + searchInput + "&apikey=tjyAA0gwpffEVvhQI0s0EEVJT3wznjso"
+        "https://app.ticketmaster.com/discovery/v2/events.json?&city=" + city + "&apikey=tjyAA0gwpffEVvhQI0s0EEVJT3wznjso"
     )
         .then(function (ticketmasterResponse) {
             return ticketmasterResponse.json();
@@ -255,9 +279,9 @@ function getTickemaster() {
 // state must be lowercase and two letter abbreviation, we'll use toLowerCase() method
 // user will need to input both a city and a state for these api's to work
 
-function getCovidData() {
+function getCovidData(state) {
     // var state = "tn";
-    var state = $("#state-input").val().trim().toLowerCase();
+    // var state = $("#state-input").val().trim().toLowerCase();
 
     fetch(
         "https://covidtracking.com/api/v1/states/" + state + "/current.json"
@@ -284,9 +308,9 @@ function getCovidData() {
 
 // var city = "nashville"
 
-function getCurrent() {
+function getCurrent(city) {
 
-    var city = document.querySelector(".search-city").value;
+    // var city = document.querySelector(".search-city").value;
 
     fetch(
         "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=1a779978d53b819f8904840069dffbb8&units=imperial"
@@ -341,9 +365,9 @@ function getCurrent() {
         });
 };
 
-function getWeatherForecast() {
+function getWeatherForecast(city) {
 
-    var city = document.querySelector(".search-city").value;
+    // var city = document.querySelector(".search-city").value;
 
     fetch(
         "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=23374a7ea0862c1bbdc6d9a18c5c0b7a"
@@ -409,6 +433,22 @@ function getWeatherForecast() {
 };
 
 // local storage function
+
+var saveLocation = function (city, state) {
+
+    // var city = $("#city-input").val().trim().toLowerCase();
+    // var state = $("#state-input").val().trim().toUpperCase();
+
+    console.log(city);
+    console.log(state);
+
+    var newSearch =
+        { "city": city, "state": state };
+
+    // add the newSearch object to the savedLocationsArray
+    savedLocationsArray.push(newSearch);
+    // console.log(savedLocationsArray);
+
 var saveLocation = function (getNPSData) {
     console.log(getNPSData);
 
@@ -423,29 +463,58 @@ var saveLocation = function (getNPSData) {
     localStorage.setItem("searched-cities", JSON.stringify(savedLocationsArray));
     showPrevious();
 
+    // start remove dupicates script
+    jsonObject = savedLocationsArray.map(JSON.stringify);
+    // console.log(jsonObject);
+
+    uniqueSet = new Set(jsonObject);
+    savedLocationsArray = Array.from(uniqueSet).map(JSON.parse);
+
+    console.log(savedLocationsArray);
+
+
+
+    // save the new array to localStorage
+    localStorage.setItem("searched-location", JSON.stringify(savedLocationsArray));
+
+    // call the showPrevious function to populate search history side bar
+    showPrevious(savedLocationsArray);
 };
 
+
+// function showPrevious shows the previously searched locations pulled from local storage
+var showPrevious = function (savedLocationsArray) {
 
 // showPrevious function to show previously searched items
 
 var showPrevious = function () {
 
+
     if (savedLocationsArray) {
 
         $("#prev-searches").empty();
-        var btns = $("<div>").attr("class", "list-group");
+
         for (var i = 0; i < savedLocationsArray.length; i++) {
-            var locationBtn = $("<button>").attr("class", "loc-btn list-group-item list-group-item-action list-group-item-primary").text(savedLocationsArray[i]);
-            btns.prepend(locationBtn);
+
+            var locationBtn = $("<button>").attr("type", "button").attr("class", "button-primary btn loc-btn").text(savedLocationsArray[i].city + ", " + savedLocationsArray[i].state);
+            $("#prev-searches").prepend(locationBtn);
+
         }
-
-        $("#prev-searches").append(btns);
-
     }
 };
 
-
 var click = function () {
+
+    var city = document.querySelector(".search-city").value;
+    var state = $("#state-input").val().trim().toLowerCase();
+
+    saveLocation(city, state);
+    getNPSData(state);
+    getTickemaster(city);
+    getCovidData(state);
+    getCurrent(city);
+    getWeatherForecast(city);
+    showData();
 
     console.log("test");
 
@@ -455,7 +524,22 @@ var click = function () {
     getCurrent();
     getWeatherForecast();
     clear();
-}
+};
+
+var historyClick = function (searchedCity, searchedState) {
+
+    var city = searchedCity;
+    var state = searchedState.toLowerCase();
+
+    // saveLocation(city, state);
+    getNPSData(state);
+    getTickemaster(city);
+    getCovidData(state);
+    getCurrent(city);
+    getWeatherForecast(city);
+    showData();
+    clear();
+};
 
 // on click for search button icon
 
@@ -475,4 +559,24 @@ $("#state-input").on("keyup", function (event) {
         event.preventDefault();
         document.getElementById("search-btn").click();
     }
+
+});
+
+// on click for previously saved locations
+$(document).on("click", ".loc-btn", function () {
+    var searchedLocation = $(this)[0].innerText;
+
+
+    // splice searchedLocation at the comma
+    var splitWords = searchedLocation.split(",");
+    var searchedCity = splitWords[0].trim();
+    var searchedState = splitWords[1].trim()
+    // console.log(searchedCity);
+    // console.log(searchedState);
+
+    historyClick(searchedCity, searchedState);
+});
+
+loadHistory();
+
 });

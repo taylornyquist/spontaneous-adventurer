@@ -18,10 +18,6 @@
     display: none;
 }
 
-.show {
-    display: block;
-}
-
 #covid-data {
     /* text-decoration-line: underline; */
     background-color: #B70000;
@@ -99,7 +95,19 @@ ul {
 .hide {
     display: none;
 }
+.show {
+    display: block;
+}
 
+.button-primary {
+    width: 100%;
+    padding: 0 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    /* text-align: left; */
+} 
+=======
 .img {
     float: right;
     width: 35%;
@@ -154,7 +162,14 @@ ul {
         width: 80%;
         padding: 0 5px;
     } 
+}
 
+@media screen and (max-width: 550px) {
+    .button-primary {
+        width: 100%;
+        padding: 0 5px;
+    } 
+  
     .description {
         width: 100%;
     }
@@ -169,5 +184,4 @@ ul {
         margin-bottom: 2rem;
         font-weight: 300; 
     }
-
 }
