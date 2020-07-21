@@ -10,12 +10,20 @@ var loadHistory = function () {
     showPrevious(savedLocationsArray);
 };
 
+var showData = function () {
 
+        // show data-section and weather-forecast (hidden on page load)
+        $(".data-section").addClass("show");
+        $(".weather-forecast").addClass("show");
+};
 
 
 
 // function to clear out previous NPS and weather divs
 function clear() {
+    // clear the city and state input boxes
+    $("#city-input").val("");
+    $("#state-input").val("");
     // clear all of the previous Ticketmaster data
     $("#ticketmaster").empty();
     // clear all of the previous NPS data
@@ -445,6 +453,7 @@ var click = function () {
     getCovidData(state);
     getCurrent(city);
     getWeatherForecast(city);
+    showData();
     clear();
 };
 
@@ -459,6 +468,7 @@ var historyClick = function (searchedCity, searchedState) {
     getCovidData(state);
     getCurrent(city);
     getWeatherForecast(city);
+    showData();
     clear();
 };
 

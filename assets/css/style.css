@@ -18,10 +18,6 @@
     display: none;
 }
 
-.show {
-    display: block;
-}
-
 #covid-data {
     /* text-decoration-line: underline; */
     background-color: #B70000;
@@ -98,6 +94,10 @@ ul {
 
 .hide {
     display: none;
+}
+
+.show {
+    display: block;
 }
 
 /* Media Query */
