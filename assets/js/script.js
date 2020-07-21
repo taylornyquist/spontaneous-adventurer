@@ -442,7 +442,7 @@ var historyClick = function (searchedCity, searchedState) {
     var city = searchedCity;
     var state = searchedState.toLowerCase();
 
-    saveLocation(city, state);
+    // saveLocation(city, state);
     getNPSData(state);
     getTickemaster(city);
     getCovidData(state);
