@@ -48,13 +48,11 @@ function getNPSData(state) {
         .then(function (NPSResponse) {
             //attach Javascript to existing element in document
             var nationalParksEl = document.getElementById("nationalParks");
+
             //create ul element to hold list items
             var nationalParkSlot = document.createElement("ul");
             nationalParkSlot.setAttribute("id", "npList")
             var nationalParksListed = NPSResponse.data;
-
-
-            console.log(NPSResponse);
 
             //loop through all park responses
             for (i = 0; i < NPSResponse.data.length; i++) {
@@ -68,26 +66,18 @@ function getNPSData(state) {
                 var nationalParkImageEl = document.createElement("img");
                 var nationalParkImage = nationalParkResponse.images;
                 
-                // debugger;
                 if (nationalParkImage.length === 0) {
                     var nationalParkImageEl = document.createElement("img");
                     nationalParkImageEl.textContent = "No images available.";
-                    // nationalParkImageEl.setAttribute("class", "hide");
                     nationalParkImageEl.setAttribute("class", "img")
-
-  
-                } else {
-                    //still working on placeholder to show up when no image is available - currently it pulls image from previous park
-                    // nationalParkImageEl.addClass("hide"); if (!nationalParkImage[0])
-                    
+               } else {
                     var nationalParkImageUrl = nationalParkImage[0].url;
                     var nationalParkImageAlt = nationalParkImage[0].altText;
-                     //add image to each element
                
                 nationalParkImageEl.src = nationalParkImageUrl;
                 nationalParkImageEl.alt = nationalParkImageAlt;
                 nationalParkImageEl.setAttribute("class", "img");
-                                }
+                }
 
                 //for each park listed, create a list item and "a" element
                 var nationalParkItem = document.createElement("li");
@@ -100,26 +90,23 @@ function getNPSData(state) {
                 //create a div to hold image and description
                 var nationalParkAdditionalInfoEl = document.createElement("div");
                 nationalParkAdditionalInfoEl.setAttribute("class", "hide");
-                // nationalParkAdditionalInfoEl.setAttribute("id", "info")
+                nationalParkAdditionalInfoEl.setAttribute("id", "info")
+
                 //add description below each park name
                 var nationalParkDescriptionEl = document.createElement("p");
                 nationalParkDescriptionEl.textContent = nationalParkDescription;
                 nationalParkDescriptionEl.setAttribute("class", "description")
-                
-               
-
-                // for each park listed, iterate through addresses and pull city/state for physical address
+                    
+               // for each park listed, iterate through addresses and pull city/state for physical address
                 for (j = 0; j < nationalParkResponse.addresses.length; j++) {
 
                     if (nationalParkResponse.addresses[j].type === "Physical") {
 
                         nationalParkCity = nationalParkResponse.addresses[j].city;
                         nationalParkState = nationalParkResponse.addresses[j].stateCode;
-                        // console.log(nationalParkCity);
-                        // console.log(nationalParkState);
                         nationalParkLocation = nationalParkCity + ", " + nationalParkState;
                     }
-                }
+                };
 
                 //assign name and location to park listing
                 nationalParkItemLinked.innerText = nationalParkName + " - " + nationalParkLocation;
@@ -127,29 +114,26 @@ function getNPSData(state) {
                 //for each park listed, append link and item to ul
                 nationalParkAdditionalInfoEl.append(nationalParkDescriptionEl);
                 nationalParkAdditionalInfoEl.append(nationalParkImageEl);
-                // nationalParkAdditionalInfoEl.append(missingImageEl);
                 nationalParkItem.append(nationalParkItemLinked);
                 nationalParkItem.append(nationalParkAdditionalInfoEl);
-                // nationalParkItem.append(nationalParkImageEl);
                 nationalParkSlot.appendChild(nationalParkItem);
                 nationalParksEl.appendChild(nationalParkSlot);
 
                 //limit parks listed to 5
                 if (i >= 5) {
                     nationalParkItem.classList.add("hide");
-                }
-                
-                
+                }   
+
                 //add function to show image upon hover
                 $(nationalParkItem).hover(showImage, removeImage);
-
+               
                 var showImage = function () {
-                    var parkImage = $(this).children("div");
+                    var parkImage = $(this).children("#info");
                     parkImage.removeClass("hide");
                 };
 
                 var removeImage = function () {
-                    var parkImage = $(this).children("div");
+                    var parkImage = $(this).children("#info");
                     parkImage.addClass("hide");
                 }
 
@@ -165,11 +149,10 @@ function getNPSData(state) {
                 showLessEl.textContent = "Show Less";
                 showLessEl.setAttribute("class", "more-btn");
                 showLessEl.setAttribute("class", "hide");
-
                 nationalParksEl.appendChild(showLessEl);
                 showLessEl.addEventListener("click", showLess);
             }
-        })
+        });
 
     //function to show more results
     var showMore = function () {
@@ -185,7 +168,7 @@ function getNPSData(state) {
             showLessBtn.removeClass("hide");
             showLessBtn.addClass("more-btn");
         }
-    }
+    };
 
     //function to show fewer results
     var showLess = function () {
