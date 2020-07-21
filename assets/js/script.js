@@ -7,7 +7,7 @@ var loadHistory = function () {
     };
 
     // console.log(savedLocationsArray);
-    showPrevious();
+    showPrevious(savedLocationsArray);
 };
 
 
@@ -400,15 +400,26 @@ var saveLocation = function (city, state) {
     savedLocationsArray.push(newSearch);
     // console.log(savedLocationsArray);
 
+    // start remove dupicates script
+    jsonObject = savedLocationsArray.map(JSON.stringify);
+    // console.log(jsonObject);
+
+    uniqueSet = new Set(jsonObject);
+    savedLocationsArray = Array.from(uniqueSet).map(JSON.parse);
+
+    console.log(savedLocationsArray);
+
+
+
     // save the new array to localStorage
     localStorage.setItem("searched-location", JSON.stringify(savedLocationsArray));
 
     // call the showPrevious function to populate search history side bar
-    showPrevious();
+    showPrevious(savedLocationsArray);
 };
 
 // function showPrevious shows the previously searched locations pulled from local storage
-var showPrevious = function () {
+var showPrevious = function (savedLocationsArray) {
 
     if (savedLocationsArray) {
 
