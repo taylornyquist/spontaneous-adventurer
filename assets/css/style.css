@@ -110,10 +110,14 @@ ul {
 } 
 
 .img {
+    display: block;
     float: right;
-    width: 35%;
+    max-width: 35%;
+    /* max-height: auto; */
+    /* height: auto; */
     margin-top: 10px;
-    max-height: 175px;
+    max-height: 150px;
+    margin-bottom: 10px;
 }
 
 .park {
@@ -220,18 +224,22 @@ ul {
         padding: 0 5px;
     } 
   
-    .description {
-        width: 100%;
-    }
-
-    .img {
-        width: 100%;
-    }
-
     .park {
         font-size: 1.8rem; 
         margin-top: 0;
         margin-bottom: 2rem;
         font-weight: 300; 
+    }
+
+    .description {
+        width: 100%;
+      }
+
+    .img {
+        max-width: 100%;
+        max-height: 80%;
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
     }
 }
