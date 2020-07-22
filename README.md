@@ -15,8 +15,11 @@
 
 ### User Story
 AS A person living through the Covid-19 pandemic
+
 I WANT to get out of the house.
+
 HOWEVER, current conditions prevent me from planning my travel too far in advance.
+
 I NEED a way to plan for last-minute trips.
 
 The Spontaneous Adventurer serves as a guide for last-minute getaways and day trips, providing current information on events, nearby parks, weather conditions, and current COVID-19 conditions in a given location. 
@@ -41,11 +44,11 @@ Each team member was assigned an element of the application.
 
 While each team member had their own role, the project was truly a group effort with several study sessions to work through challenges together.
 
-Challenges:
+### Challenges:
 * Learning to use GitHub as a team to push and merge different branches
 * Finding a method or creating a function to prevent the search history from duplication
 
-Successes: 
+### Successes: 
 * Learning to use GitHub as a team.
 * Communicating and working as a team.
 
