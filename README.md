@@ -54,6 +54,7 @@ While each team member had their own role, the project was truly a group effort 
 
 ## Demo
 ![screen-shot](./assets/images/screen-shot.png)
+![gif](<iframe src="https://drive.google.com/file/d/1Yb81aVSaUZC_xoNpcEkUq-YA1WcT52GJ/preview" width="640" height="480"></iframe>)
 
 ## Future Development
 * Expand from just the US to worldwide
