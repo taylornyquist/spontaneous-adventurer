@@ -425,7 +425,7 @@ var showPrevious = function (savedLocationsArray) {
 
 //script for error
 function errorMessage() {
-    $("#error").empty();
+    $("#myMessage").empty();
     var message, state;
     message = document.getElementById("myMessage");
     state = document.getElementById("state-input").value;
