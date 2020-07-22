@@ -106,8 +106,8 @@ function getNPSData(state) {
                 nationalParkItemLinked.innerText = nationalParkName + " - " + nationalParkLocation;
 
                 //for each park listed, append link and item to ul
-                nationalParkAdditionalInfoEl.append(nationalParkDescriptionEl);
                 nationalParkAdditionalInfoEl.append(nationalParkImageEl);
+                nationalParkAdditionalInfoEl.append(nationalParkDescriptionEl);
                 nationalParkItem.append(nationalParkItemLinked);
                 nationalParkItem.append(nationalParkAdditionalInfoEl);
                 nationalParkSlot.appendChild(nationalParkItem);
