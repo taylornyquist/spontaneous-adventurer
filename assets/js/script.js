@@ -433,16 +433,15 @@ function errorMessage() {
     // console.log(state.length);
 
     if (city === "") {
-        // message.classList.add("show");
-        $(message).addClass("show my-message");
+        message.classList.add("show");
         message.innerText = "Please be sure to enter a city.";
     }
     else if (state === "") {
-        $(message).addClass("show my-message");
+        message.classList.add("show");
         message.innerText = "Please be sure to enter a state.";
     }
     else if (state.length !== 2) {
-        $(message).addClass("show my-message");
+        message.classList.add("show");
         message.innerText = "Please use two-digit state abbreviation.";
         return;
     }
