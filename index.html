@@ -28,8 +28,8 @@
 <body>
 
     <nav class="navbar">
-        <h1>Travel Dashboard</h1>
-        <h5 class="site-describe">A site for spontaneous travelers to plan their last minute trips!</h5>
+        <h1>The Spontaneous Adventurer</h1>
+        <h5 class="site-describe">A site for spontaneous travelers to plan their last-minute trips!</h5>
     </nav>
 
     <h5 class="covid-warning">Coronavirus Disease 2019 (COVID-19) Warning: <span id="covid-data"></span> Confirmed Cases
@@ -51,21 +51,14 @@
                 </div>
 
             </div>
-
-        </div>
+               
+    <div id="myMessage" class="error, hide"></div>
 
         <div class="row main-section">
 
             <div class="three columns border search-history">
                 <h5>Search History:</h5>
-                <div id="prev-searches">
-                    <!-- <button class="button-primary" type="button" class="btn">Search 1</button>
-                    <button class="button-primary" type="button" class="btn">Search 2</button>
-                    <button class="button-primary" type="button" class="btn">Search 3</button>
-                    <button class="button-primary" type="button" class="btn">Search 4</button>
-                    <button class="button-primary" type="button" class="btn">Search 5</button>
-                    <button class="button-primary" type="button" class="btn">Search 6</button> -->
-                </div>
+                <div id="prev-searches"></div>
             </div>
 
             <div class="nine columns data-section hide">
@@ -73,18 +66,7 @@
                 <div class="row">
                     <div class="twelve columns border">
                         <h5>Ticketmaster Events:</h5>
-                        <div id="ticketmaster">
-
-                            <!-- <ul>
-                            <li>
-                                <span>What:</span><span class="event-name event-span"></span>
-                                <span>When:</span><span class="event-date event-span"></span><span class="event-time event-span"></span>
-                                <span>Where:</span><span class="event-venue event-span"></span>
-                                <a href="" target="_blank" class="event-url event-span">Get Tickets</a>
-                            </li>
-                        </ul> -->
-
-                        </div>
+                        <div id="ticketmaster"></div>
                     </div>
 
 
@@ -92,15 +74,7 @@
 
                 <div class="row border national-parks">
                     <h5>National Park Information:</h5>
-                    <div id="nationalParks">
-                        <!-- <ul>
-                        <li>Park 1 Info</li>
-                        <li>Park 2 Info</li>
-                        <li>Park 3 Info</li>
-                        <li>Park 4 Info</li>
-                        <li>Park 5 Info</li>
-                    </ul> -->
-                    </div>
+                    <div id="nationalParks"></div>
                 </div>
 
             </div>
@@ -110,99 +84,27 @@
         <div class="row weather-forecast border hide">
             <h5 id="weather-header">Weather:</h5>
             <div id="forecast"></div>
-
-            <!-- <div class="two columns card border">
-                <div class="card-header">
-                    Weather 1
-                </div>
-                <div>
-                    <span class="material-icons">
-                        filter_drama
-                    </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Temp: 75 &#8457;</p>
-                    <p class="card-text">Humidity: 65%</p>
-                </div>
-            </div>
-
-            <div class="two columns card border">
-                <div class="card-header">
-                    Weather 2
-                </div>
-                <div>
-                    <span class="material-icons">
-                        filter_drama
-                    </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Temp: 75 &#8457;</p>
-                    <p class="card-text">Humidity: 65%</p>
-                </div>
-            </div>
-
-            <div class="two columns card border">
-                <div class="card-header">
-                    Weather 3
-                </div>
-                <div>
-                    <span class="material-icons">
-                        filter_drama
-                    </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Temp: 75 &#8457;</p>
-                    <p class="card-text">Humidity: 65%</p>
-                </div>
-            </div>
-
-            <div class="two columns card border">
-                <div class="card-header">
-                    Weather 4
-                </div>
-                <div>
-                    <span class="material-icons">
-                        filter_drama
-                    </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Temp: 75 &#8457;</p>
-                    <p class="card-text">Humidity: 65%</p>
-                </div>
-            </div>
-
-            <div class="two columns card border">
-                <div class="card-header">
-                    Weather 5
-                </div>
-                <div>
-                    <span class="material-icons">
-                        filter_drama
-                    </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Temp: 75 &#8457;</p>
-                    <p class="card-text">Humidity: 65%</p>
-                </div>
-            </div>
-
-            <div class="two columns card border">
-                <div class="card-header">
-                    Weather 6
-                </div>
-                <div>
-                    <span class="material-icons">
-                        filter_drama
-                    </span>
-                </div>
-                <div class="card-body">
-                    <p class="card-text">Temp: 75 &#8457;</p>
-                    <p class="card-text">Humidity: 65%</p>
-                </div>
-            </div> -->
-
         </div>
     </div>
+
+    <!-- Start Modal -->
+    <!-- <h5>Modal Example</h5>
+
+    Trigger/Open The Modal
+    <button id="myBtn">Open Modal</button>
+    
+    The Modal
+    <div id="myModal" class="modal, hide">
+    
+      Modal content
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>You done messed it alllll up!!!</p>
+      </div>
+    
+    </div> --> 
+
+    <!-- End Modal -->
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

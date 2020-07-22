@@ -30,13 +30,7 @@ function clear() {
     $("#forecast").empty();
 };
 
-// seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
-// var stateCode = "tn";
-
-
 function getNPSData(state) {
-
-    // var state = $("#state-input").val().trim().toLowerCase();
 
     fetch(
         "https://developer.nps.gov/api/v1/parks?parkCode=&stateCode=" + state + "&api_key=VWQc76Xi1MA1G7mT3R2RbvodV6ongjdqKvID51cV"
@@ -48,13 +42,11 @@ function getNPSData(state) {
         .then(function (NPSResponse) {
             //attach Javascript to existing element in document
             var nationalParksEl = document.getElementById("nationalParks");
+
             //create ul element to hold list items
             var nationalParkSlot = document.createElement("ul");
             nationalParkSlot.setAttribute("id", "npList")
             var nationalParksListed = NPSResponse.data;
-
-
-            // console.log(NPSResponse);
 
             //loop through all park responses
             for (i = 0; i < NPSResponse.data.length; i++) {
@@ -65,36 +57,20 @@ function getNPSData(state) {
                 var nationalParkName = nationalParkResponse.fullName;
                 var nationalParkURL = nationalParkResponse.url;
                 var nationalParkDescription = nationalParkResponse.description;
+                var nationalParkImageEl = document.createElement("img");
                 var nationalParkImage = nationalParkResponse.images;
-                var missingImage = document.createElement("button");
-                missingImage.textContent = "No images available.";
-                missingImage.setAttribute("class", "hide");
-
-                // debugger;
-                if (nationalParkImage[0]) {
+                
+                if (nationalParkImage.length === 0) {
+                    var nationalParkImageEl = document.createElement("img");
+                    nationalParkImageEl.textContent = "No images available.";
+                    nationalParkImageEl.setAttribute("class", "img")
+                } else {
                     var nationalParkImageUrl = nationalParkImage[0].url;
                     var nationalParkImageAlt = nationalParkImage[0].altText;
-
-
-
-                    //add function to show image upon hover
-                    $(nationalParkItem).hover(showImage, removeImage);
-
-                    var showImage = function () {
-                        var parkImage = $(this).children("div");
-                        parkImage.removeClass("hide");
-                    };
-
-                    var removeImage = function () {
-                        var parkImage = $(this).children("div");
-                        parkImage.addClass("hide");
-                    }
-
-                } else {
-                    //still working on placeholder to show up when no image is available - currently it pulls image from previous park
-                    // nationalParkImageEl.addClass("hide");
-                    var parkBtn = $(this).children("button");
-                    parkBtn.removeClass("hide");
+               
+                nationalParkImageEl.src = nationalParkImageUrl;
+                nationalParkImageEl.alt = nationalParkImageAlt;
+                nationalParkImageEl.setAttribute("class", "img");
                 }
 
                 //for each park listed, create a list item and "a" element
@@ -107,30 +83,24 @@ function getNPSData(state) {
 
                 //create a div to hold image and description
                 var nationalParkAdditionalInfoEl = document.createElement("div");
-                // nationalParkAdditionalInfoEl.setAttribute("id", "info")
+                nationalParkAdditionalInfoEl.setAttribute("class", "hide");
+                nationalParkAdditionalInfoEl.setAttribute("id", "info")
+
                 //add description below each park name
                 var nationalParkDescriptionEl = document.createElement("p");
                 nationalParkDescriptionEl.textContent = nationalParkDescription;
                 nationalParkDescriptionEl.setAttribute("class", "description")
-                //add image to each element
-                var nationalParkImageEl = document.createElement("img")
-                nationalParkImageEl.src = nationalParkImageUrl;
-                nationalParkImageEl.alt = nationalParkImageAlt;
-                nationalParkImageEl.setAttribute("class", "img");
-                nationalParkAdditionalInfoEl.setAttribute("class", "hide");
-
-                // for each park listed, iterate through addresses and pull city/state for physical address
+                    
+               // for each park listed, iterate through addresses and pull city/state for physical address
                 for (j = 0; j < nationalParkResponse.addresses.length; j++) {
 
                     if (nationalParkResponse.addresses[j].type === "Physical") {
 
                         nationalParkCity = nationalParkResponse.addresses[j].city;
                         nationalParkState = nationalParkResponse.addresses[j].stateCode;
-                        // console.log(nationalParkCity);
-                        // console.log(nationalParkState);
                         nationalParkLocation = nationalParkCity + ", " + nationalParkState;
                     }
-                }
+                };
 
                 //assign name and location to park listing
                 nationalParkItemLinked.innerText = nationalParkName + " - " + nationalParkLocation;
@@ -138,18 +108,30 @@ function getNPSData(state) {
                 //for each park listed, append link and item to ul
                 nationalParkAdditionalInfoEl.append(nationalParkDescriptionEl);
                 nationalParkAdditionalInfoEl.append(nationalParkImageEl);
-                nationalParkAdditionalInfoEl.append(missingImage);
                 nationalParkItem.append(nationalParkItemLinked);
                 nationalParkItem.append(nationalParkAdditionalInfoEl);
-                // nationalParkItem.append(nationalParkImageEl);
                 nationalParkSlot.appendChild(nationalParkItem);
                 nationalParksEl.appendChild(nationalParkSlot);
 
                 //limit parks listed to 5
                 if (i >= 5) {
                     nationalParkItem.classList.add("hide");
+                }   
+
+                //add function to show image upon hover
+                $(nationalParkItem).hover(showImage, removeImage);
+               
+                var showImage = function () {
+                    var parkImage = $(this).children("#info");
+                    parkImage.removeClass("hide");
+                };
+
+                var removeImage = function () {
+                    var parkImage = $(this).children("#info");
+                    parkImage.addClass("hide");
                 }
-            }
+            };
+
             //create button below abbreviated list to show more results
             if (nationalParksListed.length >= 5) {
                 var showMoreEl = document.createElement("button");
@@ -161,11 +143,10 @@ function getNPSData(state) {
                 showLessEl.textContent = "Show Less";
                 showLessEl.setAttribute("class", "more-btn");
                 showLessEl.setAttribute("class", "hide");
-
                 nationalParksEl.appendChild(showLessEl);
                 showLessEl.addEventListener("click", showLess);
             }
-        })
+        });
 
     //function to show more results
     var showMore = function () {
@@ -179,8 +160,9 @@ function getNPSData(state) {
         }
         if (listChildren.length > 5 && !listChildren.hasClass("hide")) {
             showLessBtn.removeClass("hide");
+            showLessBtn.addClass("more-btn");
         }
-    }
+    };
 
     //function to show fewer results
     var showLess = function () {
@@ -204,11 +186,8 @@ function getNPSData(state) {
     };
 };
 
-// var cityName = "nashville";
 
 function getTickemaster(city) {
-    //Get DOM element for search value to place in API call
-    // var searchInput = document.querySelector(".search-city").value;
 
     fetch(
         "https://app.ticketmaster.com/discovery/v2/events.json?&city=" + city + "&apikey=tjyAA0gwpffEVvhQI0s0EEVJT3wznjso"
@@ -264,8 +243,6 @@ function getTickemaster(city) {
 // user will need to input both a city and a state for these api's to work
 
 function getCovidData(state) {
-    // var state = "tn";
-    // var state = $("#state-input").val().trim().toLowerCase();
 
     fetch(
         "https://covidtracking.com/api/v1/states/" + state + "/current.json"
@@ -290,11 +267,7 @@ function getCovidData(state) {
 
 };
 
-// var city = "nashville"
-
 function getCurrent(city) {
-
-    // var city = document.querySelector(".search-city").value;
 
     fetch(
         "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=1a779978d53b819f8904840069dffbb8&units=imperial"
@@ -351,8 +324,6 @@ function getCurrent(city) {
 
 function getWeatherForecast(city) {
 
-    // var city = document.querySelector(".search-city").value;
-
     fetch(
         "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=23374a7ea0862c1bbdc6d9a18c5c0b7a"
     )
@@ -363,11 +334,6 @@ function getWeatherForecast(city) {
             //create element to house forecast information
             var forecastEl = $("#forecast");
             forecastEl.innerHTML = "<h4>" + city + ":</h4>";
-            // var forecastRowEl = document.createElement("div");
-            // forecastRowEl.className = "row";
-            // var divEl = document.createElement("div");
-            // divEl.classList.add("card-deck");
-
 
             for (i = 0; i < weatherResponse.list.length; i++) {
                 //find instances in the forecast data occurring at 3 p.m. 
@@ -419,12 +385,6 @@ function getWeatherForecast(city) {
 // local storage function
 var saveLocation = function (city, state) {
 
-    // var city = $("#city-input").val().trim().toLowerCase();
-    // var state = $("#state-input").val().trim().toUpperCase();
-
-    // console.log(city);
-    // console.log(state);
-
     var newSearch =
         { "city": city, "state": state };
 
@@ -438,10 +398,7 @@ var saveLocation = function (city, state) {
 
     uniqueSet = new Set(jsonObject);
     savedLocationsArray = Array.from(uniqueSet).map(JSON.parse);
-
     // console.log(savedLocationsArray);
-
-
 
     // save the new array to localStorage
     localStorage.setItem("searched-location", JSON.stringify(savedLocationsArray));
@@ -465,6 +422,62 @@ var showPrevious = function (savedLocationsArray) {
         }
     }
 };
+
+//script for error
+function errorMessage() {
+    $("#myMessage").empty();
+    var message, state;
+    message = document.getElementById("myMessage");
+    state = document.getElementById("state-input").value;
+    city = document.getElementById("city-input").value;
+    console.log(state.length);
+    
+    if (state.length !== 2) {
+        message.classList.add("show");
+        message.innerText = "Please use two-digit state abbreviation.";
+        return;
+            }
+    else if (city === "") {
+        message.classList.add("show");
+        message.innerText = "Please be sure to enter a city.";
+            }
+    else  {
+        click();
+            }
+  };
+ 
+// script for Modal
+
+// // Get the modal
+// var modal = document.getElementById("myModal");
+
+// // Get the button that opens the modal
+// var btn = document.getElementById("myBtn");
+
+// // Get the <span> element that closes the modal
+// var span = document.getElementsByClassName("close")[0];
+
+// // When the user clicks the button, open the modal CHANGE THIS TO BE TRIGGERED BY ERRORS
+// btn.onclick = function() {
+//   modal.style.display = "block";
+// }
+
+// // When the user clicks on <span> (x), close the modal
+// span.onclick = function() {
+//   modal.style.display = "none";
+// }
+
+// // When the user clicks anywhere outside of the modal, close it
+// window.onclick = function(event) {
+//   if (event.target == modal) {
+//     modal.style.display = "none";
+//   }
+// }
+// end Modal script
+
+var checkError = function() {
+    errorMessage();
+}
 
 var click = function () {
 
@@ -497,9 +510,7 @@ var historyClick = function (searchedCity, searchedState) {
 };
 
 // on click for search button icon
-
-$("#search-btn").on("click", click);
-
+$("#search-btn").on("click", checkError);
 
 $("#city-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
@@ -511,7 +522,7 @@ $("#city-input").on("keyup", function (event) {
 $("#state-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
         event.preventDefault();
-        document.getElementById("search-btn").click();
+        document.getElementById("search-btn").checkError();
     }
 });
 
@@ -519,7 +530,7 @@ $("#state-input").on("keyup", function (event) {
 $(document).on("click", ".loc-btn", function () {
     var searchedLocation = $(this)[0].innerText;
 
-    // splice searchedLocation at the comma
+    // split searchedLocation at the comma
     var splitWords = searchedLocation.split(",");
     var searchedCity = splitWords[0].trim();
     var searchedState = splitWords[1].trim()
