@@ -56,10 +56,6 @@ While each team member had their own role, the project was truly a group effort 
 <img src="./assets/images/screen-shot3.png" alt="" />
 <img src="./assets/images/screen-shot4.png" alt="" />
 
-![Alt Text Test](./assets/images/video1.gif)
-
-<img src="./assets/images/video1.gif" width="75%"/>
-
 [![video demo of application](./assets/images/screen-shot5.png)](https://drive.google.com/file/d/1Yb81aVSaUZC_xoNpcEkUq-YA1WcT52GJ/preview "Video Demo of Application")
 
 ## Future Development
