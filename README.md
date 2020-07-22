@@ -19,7 +19,14 @@ Motivation for development here
 User story here
 
 ## Process
-Technologies used
+Technologies used:
+* HTML
+* CSS
+* Skeleton CSS
+* JavaScript
+* jQuery
+* Moment.js
+* Google Fonts
 
 Breadown of tasks and roles
 
@@ -31,12 +38,19 @@ Successes
 ![screen-shot](./assets/images/screen-shot.png)
 
 ## Future Development
-Directions for future development here
+* Expand from just the US to worldwide
+* Expanded API information from more sources
+  * Hotel info
+  * Flight/rental car info
+  * Food and dining info
+* Geolocation feature to find user's location
+* Future dates feature to allow user to search a specific date range in the future
+* More error handling and reporting for invalid searches
 
 ## Link
-https://github.com/taylornyquist/project-1
+https://taylornyquist.github.io/project-1/
 
-Place deployed link here.
+https://github.com/taylornyquist/project-1
 
 ## Contribution
 * Taylor Nyquist (https://github.com/taylornyquist)
