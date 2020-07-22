@@ -154,7 +154,9 @@ ul {
 }
 
 #myMessage {
-    color: #B70000;
+    color: red;
+    font-weight: bold;
+    font-style: italic;
 }
 
 /* Start Modal Style */
