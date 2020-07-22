@@ -19,13 +19,30 @@ Motivation for development here
 User story here
 
 ## Process
-Technologies used
+The project was built with HTML, CSS, JavaScript, and JQuery. The project also utilized Moment, Skeleton, and Google Fonts.
 
-Breadown of tasks and roles
+The following APIs were used:
+* COVID Tracking
+* National Parks Service
+* TicketMaster
+* Open Weather
 
-Challenges
+Each team member was assigned an element of the application. 
 
-Successes
+* Taylor handled the HTML layout, the CSS framework, and created the COVID function.
+* Tracey created the National Parks function and error display.
+* Sharee created the Ticketmaster function.
+* Rachel created the functions for local storage and persistent data.
+
+While each team member had their own role, the project was truly a group effort with several study sessions to work through challenges together.
+
+Challenges:
+* Learning to use GitHub as a team to push and merge different branches
+* Finding a method or creating a function to prevent the search history from duplication
+
+Successes: 
+* Learning to use GitHub as a team.
+* Communicating and working as a team.
 
 ## Demo
 ![screen-shot](./assets/images/screen-shot.png)
