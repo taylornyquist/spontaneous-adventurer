@@ -153,6 +153,10 @@ ul {
     float: left;
 }
 
+#myMessage {
+    color: #B70000;
+}
+
 /* Start Modal Style */
 /* The Modal (background) */
 .modal {

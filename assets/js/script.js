@@ -30,13 +30,7 @@ function clear() {
     $("#forecast").empty();
 };
 
-// seems like this one will accept uppercase or lowercase, still should use .val() and .trim()
-// var stateCode = "tn";
-
-
 function getNPSData(state) {
-
-    // var state = $("#state-input").val().trim().toLowerCase();
 
     fetch(
         "https://developer.nps.gov/api/v1/parks?parkCode=&stateCode=" + state + "&api_key=VWQc76Xi1MA1G7mT3R2RbvodV6ongjdqKvID51cV"
@@ -70,7 +64,7 @@ function getNPSData(state) {
                     var nationalParkImageEl = document.createElement("img");
                     nationalParkImageEl.textContent = "No images available.";
                     nationalParkImageEl.setAttribute("class", "img")
-               } else {
+                } else {
                     var nationalParkImageUrl = nationalParkImage[0].url;
                     var nationalParkImageAlt = nationalParkImage[0].altText;
                
@@ -136,8 +130,8 @@ function getNPSData(state) {
                     var parkImage = $(this).children("#info");
                     parkImage.addClass("hide");
                 }
+            };
 
-            }
             //create button below abbreviated list to show more results
             if (nationalParksListed.length >= 5) {
                 var showMoreEl = document.createElement("button");
@@ -192,11 +186,8 @@ function getNPSData(state) {
     };
 };
 
-// var cityName = "nashville";
 
 function getTickemaster(city) {
-    //Get DOM element for search value to place in API call
-    // var searchInput = document.querySelector(".search-city").value;
 
     fetch(
         "https://app.ticketmaster.com/discovery/v2/events.json?&city=" + city + "&apikey=tjyAA0gwpffEVvhQI0s0EEVJT3wznjso"
@@ -252,8 +243,6 @@ function getTickemaster(city) {
 // user will need to input both a city and a state for these api's to work
 
 function getCovidData(state) {
-    // var state = "tn";
-    // var state = $("#state-input").val().trim().toLowerCase();
 
     fetch(
         "https://covidtracking.com/api/v1/states/" + state + "/current.json"
@@ -278,11 +267,7 @@ function getCovidData(state) {
 
 };
 
-// var city = "nashville"
-
 function getCurrent(city) {
-
-    // var city = document.querySelector(".search-city").value;
 
     fetch(
         "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=1a779978d53b819f8904840069dffbb8&units=imperial"
@@ -339,8 +324,6 @@ function getCurrent(city) {
 
 function getWeatherForecast(city) {
 
-    // var city = document.querySelector(".search-city").value;
-
     fetch(
         "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=23374a7ea0862c1bbdc6d9a18c5c0b7a"
     )
@@ -351,11 +334,6 @@ function getWeatherForecast(city) {
             //create element to house forecast information
             var forecastEl = $("#forecast");
             forecastEl.innerHTML = "<h4>" + city + ":</h4>";
-            // var forecastRowEl = document.createElement("div");
-            // forecastRowEl.className = "row";
-            // var divEl = document.createElement("div");
-            // divEl.classList.add("card-deck");
-
 
             for (i = 0; i < weatherResponse.list.length; i++) {
                 //find instances in the forecast data occurring at 3 p.m. 
@@ -407,12 +385,6 @@ function getWeatherForecast(city) {
 // local storage function
 var saveLocation = function (city, state) {
 
-    // var city = $("#city-input").val().trim().toLowerCase();
-    // var state = $("#state-input").val().trim().toUpperCase();
-
-    // console.log(city);
-    // console.log(state);
-
     var newSearch =
         { "city": city, "state": state };
 
@@ -426,10 +398,7 @@ var saveLocation = function (city, state) {
 
     uniqueSet = new Set(jsonObject);
     savedLocationsArray = Array.from(uniqueSet).map(JSON.parse);
-
     // console.log(savedLocationsArray);
-
-
 
     // save the new array to localStorage
     localStorage.setItem("searched-location", JSON.stringify(savedLocationsArray));
@@ -456,17 +425,24 @@ var showPrevious = function (savedLocationsArray) {
 
 //script for error
 function errorMessage() {
+    $("#error").empty();
     var message, state;
-    message = document.getElementById("myModal");
+    message = document.getElementById("myMessage");
     state = document.getElementById("state-input").value;
+    city = document.getElementById("city-input").value;
     console.log(state.length);
     
-    if (state.length === 2) {
-        console.log("everything works!");
-        }
-    else  {
+    if (state.length !== 2) {
         message.classList.add("show");
         message.innerText = "Please use two-digit state abbreviation.";
+        return;
+            }
+    else if (city === "") {
+        message.classList.add("show");
+        message.innerText = "Please be sure to enter a city.";
+            }
+    else  {
+        click();
             }
   };
  
@@ -499,12 +475,15 @@ function errorMessage() {
 // }
 // end Modal script
 
+var checkError = function() {
+    errorMessage();
+}
+
 var click = function () {
 
     var city = document.querySelector(".search-city").value;
     var state = $("#state-input").val().trim().toLowerCase();
 
-    errorMessage(state);
     saveLocation(city, state);
     getNPSData(state);
     getTickemaster(city);
@@ -531,9 +510,7 @@ var historyClick = function (searchedCity, searchedState) {
 };
 
 // on click for search button icon
-
-$("#search-btn").on("click", click);
-
+$("#search-btn").on("click", checkError);
 
 $("#city-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
@@ -545,7 +522,7 @@ $("#city-input").on("keyup", function (event) {
 $("#state-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
         event.preventDefault();
-        document.getElementById("search-btn").click();
+        document.getElementById("search-btn").checkError();
     }
 });
 
@@ -553,7 +530,7 @@ $("#state-input").on("keyup", function (event) {
 $(document).on("click", ".loc-btn", function () {
     var searchedLocation = $(this)[0].innerText;
 
-    // splice searchedLocation at the comma
+    // split searchedLocation at the comma
     var splitWords = searchedLocation.split(",");
     var searchedCity = splitWords[0].trim();
     var searchedState = splitWords[1].trim()
