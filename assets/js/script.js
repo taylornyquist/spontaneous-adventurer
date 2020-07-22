@@ -12,9 +12,9 @@ var loadHistory = function () {
 
 var showData = function () {
 
-        // show data-section and weather-forecast (hidden on page load)
-        $(".data-section").addClass("show");
-        $(".weather-forecast").addClass("show");
+    // show data-section and weather-forecast (hidden on page load)
+    $(".data-section").addClass("show");
+    $(".weather-forecast").addClass("show");
 };
 
 // function to clear out previous NPS and weather divs
@@ -59,7 +59,7 @@ function getNPSData(state) {
                 var nationalParkDescription = nationalParkResponse.description;
                 var nationalParkImageEl = document.createElement("img");
                 var nationalParkImage = nationalParkResponse.images;
-                
+
                 if (nationalParkImage.length === 0) {
                     var nationalParkImageEl = document.createElement("img");
                     nationalParkImageEl.textContent = "No images available.";
@@ -67,10 +67,10 @@ function getNPSData(state) {
                 } else {
                     var nationalParkImageUrl = nationalParkImage[0].url;
                     var nationalParkImageAlt = nationalParkImage[0].altText;
-               
-                nationalParkImageEl.src = nationalParkImageUrl;
-                nationalParkImageEl.alt = nationalParkImageAlt;
-                nationalParkImageEl.setAttribute("class", "img");
+
+                    nationalParkImageEl.src = nationalParkImageUrl;
+                    nationalParkImageEl.alt = nationalParkImageAlt;
+                    nationalParkImageEl.setAttribute("class", "img");
                 }
 
                 //for each park listed, create a list item and "a" element
@@ -90,8 +90,8 @@ function getNPSData(state) {
                 var nationalParkDescriptionEl = document.createElement("p");
                 nationalParkDescriptionEl.textContent = nationalParkDescription;
                 nationalParkDescriptionEl.setAttribute("class", "description")
-                    
-               // for each park listed, iterate through addresses and pull city/state for physical address
+
+                // for each park listed, iterate through addresses and pull city/state for physical address
                 for (j = 0; j < nationalParkResponse.addresses.length; j++) {
 
                     if (nationalParkResponse.addresses[j].type === "Physical") {
@@ -116,11 +116,11 @@ function getNPSData(state) {
                 //limit parks listed to 5
                 if (i >= 5) {
                     nationalParkItem.classList.add("hide");
-                }   
+                }
 
                 //add function to show image upon hover
                 $(nationalParkItem).hover(showImage, removeImage);
-               
+
                 var showImage = function () {
                     var parkImage = $(this).children("#info");
                     parkImage.removeClass("hide");
@@ -430,22 +430,27 @@ function errorMessage() {
     message = document.getElementById("myMessage");
     state = document.getElementById("state-input").value;
     city = document.getElementById("city-input").value;
-    console.log(state.length);
-    
-    if (state.length !== 2) {
+    // console.log(state.length);
+
+    if (city === "") {
+        message.classList.add("show");
+        message.innerText = "Please be sure to enter a city.";
+    }
+    else if (state === "") {
+        message.classList.add("show");
+        message.innerText = "Please be sure to enter a state.";
+    }
+    else if (state.length !== 2) {
         message.classList.add("show");
         message.innerText = "Please use two-digit state abbreviation.";
         return;
-            }
-    else if (city === "") {
-        message.classList.add("show");
-        message.innerText = "Please be sure to enter a city.";
-            }
-    else  {
-        click();
-            }
-  };
- 
+    }
+   
+    else {
+        searchClick();
+    }
+};
+
 // script for Modal
 
 // // Get the modal
@@ -475,11 +480,11 @@ function errorMessage() {
 // }
 // end Modal script
 
-var checkError = function() {
+var checkError = function () {
     errorMessage();
 }
 
-var click = function () {
+var searchClick = function () {
 
     var city = document.querySelector(".search-city").value;
     var state = $("#state-input").val().trim().toLowerCase();
@@ -522,7 +527,7 @@ $("#city-input").on("keyup", function (event) {
 $("#state-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
         event.preventDefault();
-        document.getElementById("search-btn").checkError();
+        document.getElementById("search-btn").click();
     }
 });
 
