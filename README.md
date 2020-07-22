@@ -1,8 +1,6 @@
 # The Spontaneous Adventurer
 * The must have guide for your last minute excursions.
 
-* Elevator Pitch Here!!
-
 ## Table of contents
 * [Concept](#concept)
 * [Process](#process)
@@ -37,9 +35,9 @@ The following APIs were used:
 
 Each team member was assigned an element of the application. 
 
-* Taylor handled the HTML layout, the CSS framework and created the COVID function.
-* Tracey created the National Parks function, weather function and error display.
-* Sharee created the Ticketmaster function.
+* Taylor handled the HTML layout, the CSS framework, and created the COVID and current weather functions.
+* Tracey created the National Parks function, weather forecast function and error display.
+* Sharee created the Ticketmaster function and README file.
 * Rachel created the functions for local storage and persistent data.
 
 While each team member had their own role, the project was truly a group effort with several study sessions to work through challenges together.
