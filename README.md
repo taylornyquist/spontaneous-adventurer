@@ -1,7 +1,7 @@
 # The Spontaneous Adventurer
-> The must have guide for your last minute excursions.
+* The must have guide for your last minute excursions.
 
-> Elevator Pitch Here!!
+* Elevator Pitch Here!!
 
 ## Table of contents
 * [Concept](#concept)
@@ -22,12 +22,12 @@ HOWEVER, current conditions prevent me from planning my travel too far in advanc
 
 I NEED a way to plan for last-minute trips.
 
-The Spontaneous Adventurer serves as a guide for last-minute getaways and day trips, providing current information on events, nearby parks, weather conditions, and current COVID-19 conditions in a given location. 
+The Spontaneous Adventurer serves as a guide for last-minute getaways and day trips, providing current information on events, nearby parks, weather conditions and current COVID-19 conditions in a given location. 
 
 In this time of uncertainty, a last-minute getaway can reduce anxiety that comes from staying home. The Spontaneous Adventurer provides the information needed to plan a successful adventure at a traveler's fingertips.
 
 ## Process
-The project was built with HTML, CSS, JavaScript, and JQuery. The project also utilized Moment, Skeleton, and Google Fonts.
+The project was built with HTML, CSS, JavaScript, and JQuery. The project also utilized Moment.js, Skeleton CSS, and Google Fonts.
 
 The following APIs were used:
 * COVID Tracking
@@ -37,8 +37,8 @@ The following APIs were used:
 
 Each team member was assigned an element of the application. 
 
-* Taylor handled the HTML layout, the CSS framework, and created the COVID function.
-* Tracey created the National Parks function and error display.
+* Taylor handled the HTML layout, the CSS framework and created the COVID function.
+* Tracey created the National Parks function, weather function and error display.
 * Sharee created the Ticketmaster function.
 * Rachel created the functions for local storage and persistent data.
 
@@ -46,15 +46,23 @@ While each team member had their own role, the project was truly a group effort 
 
 ### Challenges:
 * Learning to use GitHub as a team to push and merge different branches
-* Finding a method or creating a function to prevent the search history from duplication
+* Finding a method for creating a function to prevent the search history from duplicating
 
 ### Successes: 
 * Learning to use GitHub as a team.
 * Communicating and working as a team.
 
 ## Demo
-![screen-shot](./assets/images/screen-shot.png)
-![gif-video](<iframe src="https://drive.google.com/file/d/1Yb81aVSaUZC_xoNpcEkUq-YA1WcT52GJ/preview" width="640" height="480"></iframe>)
+<img src="./assets/images/screen-shot1.png" alt="" />
+<img src="./assets/images/screen-shot2.png" alt="" />
+<img src="./assets/images/screen-shot3.png" alt="" />
+<img src="./assets/images/screen-shot4.png" alt="" />
+
+![Alt Text Test](./assets/images/video1.gif)
+
+<img src="./assets/images/video1.gif" width="75%"/>
+
+[![video demo of application](./assets/images/screen-shot5.png)](https://drive.google.com/file/d/1Yb81aVSaUZC_xoNpcEkUq-YA1WcT52GJ/preview "Video Demo of Application")
 
 ## Future Development
 * Expand from just the US to worldwide
@@ -72,7 +80,7 @@ While each team member had their own role, the project was truly a group effort 
 * National Parks API server is very slow (~6 seconds)
 * Application's error handling only accounts for empty city/state search fields and state searches longer than two characters.  Needs more error handling for 400 errors, 404 errors and the like.
 
-## Link
+## Links
 https://taylornyquist.github.io/project-1/
 
 https://github.com/taylornyquist/project-1
