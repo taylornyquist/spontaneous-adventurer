@@ -20,8 +20,9 @@ var showData = function () {
 // function to clear out previous NPS and weather divs
 function clear() {
     // clear the city and state input boxes
-    $("#city-input").val("");
-    $("#state-input").val("");
+    $("#location-input").val("");
+    // $("#city-input").val("");
+    // $("#state-input").val("");
     // clear all of the previous Ticketmaster data
     $("#ticketmaster").empty();
     // clear all of the previous NPS data
@@ -424,30 +425,30 @@ var showPrevious = function (savedLocationsArray) {
 };
 
 //script for error
-function errorMessage() {
+function errorMessage(city, state) {
     $("#myMessage").empty();
-    var message, state;
+
+    var message;
     message = document.getElementById("myMessage");
-    state = document.getElementById("state-input").value;
-    city = document.getElementById("city-input").value;
-    // console.log(state.length);
 
     if (city === "") {
         message.classList.add("show");
-        message.innerText = "Please be sure to enter a city.";
+        message.innerText = "Please select one of the provided options.";
     }
     else if (state === "") {
         message.classList.add("show");
-        message.innerText = "Please be sure to enter a state.";
+        message.innerText = "Please select one of the provided options.";
+        return;
     }
     else if (state.length !== 2) {
         message.classList.add("show");
-        message.innerText = "Please use two-digit state abbreviation.";
-        return;
+        message.innerText = "Please select one of the provided options.";
+
     }
 
     else {
-        searchClick();
+        console.log("error message working");
+        searchClick(city, state);
     }
 };
 
@@ -480,14 +481,16 @@ function errorMessage() {
 // }
 // end Modal script
 
-var checkError = function () {
-    errorMessage();
+var checkError = function (city, state) {
+    // console.log(city);
+    // console.log(state);
+    errorMessage(city, state);
 }
 
-var searchClick = function () {
+var searchClick = function (city, state) {
 
-    var city = document.querySelector(".search-city").value;
-    var state = $("#state-input").val().trim().toLowerCase();
+    // var city = document.querySelector(".search-city").value;
+    var state = state.trim().toLowerCase();
 
     saveLocation(city, state);
     getNPSData(state);
@@ -497,6 +500,49 @@ var searchClick = function () {
     getWeatherForecast(city);
     showData();
     clear();
+};
+var autocomplete;
+
+var searchAutocomplete = function () {
+
+    autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById("location-input"), { types: ['geocode'] }
+    );
+
+    autocomplete.setFields(['address_component']);
+
+    autocomplete.addListener("place_changed", fillInAddress);
+};
+
+var fillInAddress = function () {
+    var place = autocomplete.getPlace();
+
+    if (!place.address_components) {
+        $("#myMessage").empty();
+    var message;
+    message = document.getElementById("myMessage");
+        message.classList.add("show");
+        message.innerText = "No details available for: '" + place.name + "'.";
+        return;
+    }
+   
+    else {
+ 
+        for (i = 0; i < place.address_components.length; i++) {
+            var location = place.address_components[i];
+            if (location.types[0] === "locality") {
+                var city = location.long_name;
+                console.log(city);
+            }
+            if (location.types[0] === "administrative_area_level_1") {
+                var state = location.short_name;
+                console.log(state);
+            }
+
+        };
+
+        searchClick(city, state);
+    }
 };
 
 var historyClick = function (searchedCity, searchedState) {
@@ -514,20 +560,17 @@ var historyClick = function (searchedCity, searchedState) {
     clear();
 };
 
-// on click for search button icon
-$("#search-btn").on("click", checkError);
-
-$("#city-input").on("keyup", function (event) {
+$("#location-input").on("keyup", function (event) {
     if (event.keyCode === 13) {
+        var locationEl = document.getElementById("location-input");
+        console.log(locationEl);
+        var location = locationEl.value;
+        var splitWords = location.split(",");
+        var city = splitWords[0].trim();
+        var state = splitWords[0].trim();
+        console.log(location);
         event.preventDefault();
-        document.getElementById("search-btn").click();
-    }
-});
-
-$("#state-input").on("keyup", function (event) {
-    if (event.keyCode === 13) {
-        event.preventDefault();
-        document.getElementById("search-btn").click();
+        checkError(city, state);
     }
 });
 
@@ -539,10 +582,9 @@ $(document).on("click", ".loc-btn", function () {
     var splitWords = searchedLocation.split(",");
     var searchedCity = splitWords[0].trim();
     var searchedState = splitWords[1].trim()
-    // console.log(searchedCity);
-    // console.log(searchedState);
 
     historyClick(searchedCity, searchedState);
 });
 
 loadHistory();
+searchAutocomplete();

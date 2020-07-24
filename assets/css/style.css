@@ -51,7 +51,6 @@ ul {
 }
 
 .main-section, .weather-forecast {
-
     margin: 10px 0;
 }
 
@@ -63,6 +62,10 @@ ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+}
+
+.location-search {
+    width: 70%;
 }
 
 .city-search h5, .city-search input, .city-search button {
