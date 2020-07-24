@@ -119,7 +119,7 @@ function getNPSData(state) {
                 }
 
                 //add function to show image upon hover
-                $(nationalParkItem).hover(showImage, removeImage);
+                $(".parkItem").hover(showImage, removeImage);
 
                 var showImage = function () {
                     var parkImage = $(this).children("#info");
