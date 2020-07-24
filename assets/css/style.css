@@ -63,14 +63,17 @@ ul {
     flex-wrap: wrap;
     justify-content: space-around;
 }
+.city-search h5 {
+    text-align: center;
+}
 
-.location-search {
+/* .location-search {
     width: 70%;
-}
+} */
 
-.city-search h5, .city-search input, .city-search button {
+/* .city-search h5, .city-search input, .city-search button {
     margin: 5px;
-}
+} */
 
 #search-btn {
     display: flex;
