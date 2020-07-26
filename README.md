@@ -69,8 +69,8 @@ While each team member had their own role, the project was truly a group effort 
 * More error handling and reporting for invalid searches
 
 ## Known Issues
-* Ticketmaster API doesn't return events in chronological order
-* Ticketmaster API doesn't list a time for an all day event
+* UPDATE: Fixed - Ticketmaster API doesn't return events in chronological order
+* UPDATE: Fixed - Ticketmaster API doesn't list a time for an all day event
 * National Parks API server is very slow (~6 seconds)
 * Application's error handling only accounts for empty city/state search fields and state searches longer than two characters.  Needs more error handling for 400 errors, 404 errors and the like.
 * Cross-site cookie handling
