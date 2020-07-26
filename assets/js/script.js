@@ -186,7 +186,6 @@ function getNPSData(state) {
     };
 };
 
-
 function getTickemaster(city) {
 
     fetch(
@@ -198,19 +197,39 @@ function getTickemaster(city) {
         .then(function (ticketmasterResponse) {
             //Get DOM element for ticketmaster div
             var ticketmasterEl = document.getElementById("ticketmaster");
-            // ticketmasterEl.innerHTML = "<h5>Ticketmaster Events:</h5>";
 
+            //Sort events
+            var ticketmasterArray = ticketmasterResponse._embedded.events.sort(
+                (a, b) => {
+                    if (a.dates.start.dateTime < b.dates.start.dateTime)
+                    return -1;
+                    if (a.dates.start.dateTime > b.dates.start.dateTime)
+                    return 1;
+                    return 0;
+                }
+            );
+
+            console.log(ticketmasterResponse);
+            
             //For loop to get data from ticketmaster API
             for (i = 0; i < 5; i++) {
                 //Get API data for events
-                var eventName = ticketmasterResponse._embedded.events[i].name;
-                var eventDate = ticketmasterResponse._embedded.events[i].dates.start.localDate;
-                var eventTime = ticketmasterResponse._embedded.events[i].dates.start.localTime;
-                var eventVenue = ticketmasterResponse._embedded.events[i]._embedded.venues[0].name;
-                var eventUrl = ticketmasterResponse._embedded.events[i].url;
+                var eventName = ticketmasterArray[i].name;
+                var eventDate = ticketmasterArray[i].dates.start.localDate;
+                var eventTime = ticketmasterArray[i].dates.start.localTime;
+                var eventVenue = ticketmasterArray[i]._embedded.venues[0].name;
+                var eventUrl = ticketmasterArray[i].url;
+                var eventImage = ticketmasterArray[i].images[0].url;
 
                 //Create DOM element to hold event information
-                var eventList = document.createElement("div")
+                var eventDiv = document.createElement("div");
+                var eventList = document.createElement("div");
+
+                //Create DOM element for image
+                var eventImageEl = document.createElement("img");
+                eventImageEl.src = eventImage;
+                eventImageEl.classList.add("event-image");
+                eventDiv.appendChild(eventImageEl);
 
                 //Create DOM element for event name and append to event div
                 var eventNameEl = document.createElement("a");
@@ -222,8 +241,12 @@ function getTickemaster(city) {
                 //Create DOM element for event date and append to event div
                 var eventDateEl = document.createElement("span");
                 eventDate = moment(eventDate).format("MM/DD/YYYY");
-                eventTime = moment(eventTime, "HH:mm:ss").format("LT");
-                eventDateEl.innerHTML = "When: " + eventDate + " at " + eventTime;
+                if (Object.is(eventTime, undefined)) {
+                    eventTime = "- All Day Event"    
+                } else {
+                    eventTime = moment(eventTime, "HH:mm:ss").format("LT")    
+                };
+                eventDateEl.innerHTML = "When: " + eventDate + " " + eventTime;
                 eventList.appendChild(eventDateEl);
 
                 //Create DOM element for event venue and append to event div
@@ -231,11 +254,21 @@ function getTickemaster(city) {
                 eventVenueEl.innerHTML = "Where: " + eventVenue;
                 eventList.appendChild(eventVenueEl);
 
-                eventList.classList.add("border", "event-div");
+                eventDiv.classList.add("border", "event-div");
+                eventList.classList.add("event-list");
 
                 //Append eventList to ticketmaster div
-                ticketmasterEl.append(eventList);
+                eventDiv.append(eventList);
+                ticketmasterEl.append(eventDiv);
             }
+
+            //Create link to more events
+            var moreEventsEl = document.createElement("a");
+            moreEventsEl.innerHTML = "Find More Events";
+            moreEventsEl.href = "https://www.ticketmaster.com/search?q=" + city;
+            moreEventsEl.target = "_blank";
+            moreEventsEl.classList.add("border", "event-div", "more-events");
+            ticketmasterEl.append(moreEventsEl);
         })
 };
 
