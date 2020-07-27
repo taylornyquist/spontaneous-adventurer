@@ -76,9 +76,9 @@ While each team member had their own role, the project was truly a group effort 
 * Cross-site cookie handling
 
 ## Links
-https://taylornyquist.github.io/project-1/
+https://taylornyquist.github.io/spontaneous-adventurer/
 
-https://github.com/taylornyquist/project-1
+https://github.com/taylornyquist/spontaneous-adventurer
 
 ## Contribution
 * Taylor Nyquist (https://github.com/taylornyquist)
